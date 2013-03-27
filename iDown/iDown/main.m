@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "comAppDelegate.h"
+#import "iDownAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([comAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([iDownAppDelegate class]));
     }
 }

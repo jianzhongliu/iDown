@@ -12,7 +12,7 @@
 		63B3A1681702D5FF0005495C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1671702D5FF0005495C /* CoreGraphics.framework */; };
 		63B3A16E1702D5FF0005495C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63B3A16C1702D5FF0005495C /* InfoPlist.strings */; };
 		63B3A1701702D5FF0005495C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A16F1702D5FF0005495C /* main.m */; };
-		63B3A1741702D5FF0005495C /* comAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A1731702D5FF0005495C /* comAppDelegate.m */; };
+		63B3A1741702D5FF0005495C /* iDownAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A1731702D5FF0005495C /* iDownAppDelegate.m */; };
 		63B3A1761702D5FF0005495C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B3A1751702D5FF0005495C /* Default.png */; };
 		63B3A1781702D5FF0005495C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B3A1771702D5FF0005495C /* Default@2x.png */; };
 		63B3A17A1702D5FF0005495C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B3A1791702D5FF0005495C /* Default-568h@2x.png */; };
@@ -42,8 +42,8 @@
 		63B3A16D1702D5FF0005495C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63B3A16F1702D5FF0005495C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		63B3A1711702D5FF0005495C /* iDown-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDown-Prefix.pch"; sourceTree = "<group>"; };
-		63B3A1721702D5FF0005495C /* comAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = comAppDelegate.h; sourceTree = "<group>"; };
-		63B3A1731702D5FF0005495C /* comAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = comAppDelegate.m; sourceTree = "<group>"; };
+		63B3A1721702D5FF0005495C /* iDownAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iDownAppDelegate.h; sourceTree = "<group>"; };
+		63B3A1731702D5FF0005495C /* iDownAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iDownAppDelegate.m; sourceTree = "<group>"; };
 		63B3A1751702D5FF0005495C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		63B3A1771702D5FF0005495C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		63B3A1791702D5FF0005495C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -112,8 +112,8 @@
 		63B3A1691702D5FF0005495C /* iDown */ = {
 			isa = PBXGroup;
 			children = (
-				63B3A1721702D5FF0005495C /* comAppDelegate.h */,
-				63B3A1731702D5FF0005495C /* comAppDelegate.m */,
+				63B3A1721702D5FF0005495C /* iDownAppDelegate.h */,
+				63B3A1731702D5FF0005495C /* iDownAppDelegate.m */,
 				63B3A16A1702D5FF0005495C /* Supporting Files */,
 			);
 			path = iDown;
@@ -263,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63B3A1701702D5FF0005495C /* main.m in Sources */,
-				63B3A1741702D5FF0005495C /* comAppDelegate.m in Sources */,
+				63B3A1741702D5FF0005495C /* iDownAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

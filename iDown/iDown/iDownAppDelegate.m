@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 David Tang. All rights reserved.
 //
 
-#import "comAppDelegate.h"
+#import "iDownAppDelegate.h"
 
-@implementation comAppDelegate
+@implementation iDownAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
