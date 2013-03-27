@@ -7,6 +7,7 @@
 //
 
 #import "iDownAppDelegate.h"
+#import "iDownViewController.h"
 
 @implementation iDownAppDelegate
 
@@ -15,6 +16,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    iDownViewController *iDown = [[iDownViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iDown];
+    [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -21,6 +21,8 @@
 		63B3A1841702D5FF0005495C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1651702D5FF0005495C /* Foundation.framework */; };
 		63B3A18C1702D6000005495C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63B3A18A1702D6000005495C /* InfoPlist.strings */; };
 		63B3A18F1702D6000005495C /* iDownTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A18E1702D6000005495C /* iDownTests.m */; };
+		63B3A19B17030D360005495C /* iDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A19A17030D360005495C /* iDownViewController.m */; };
+		63B3A1A2170312F30005495C /* UIColor+iDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A1A1170312F30005495C /* UIColor+iDown.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		63B3A18B1702D6000005495C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63B3A18D1702D6000005495C /* iDownTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iDownTests.h; sourceTree = "<group>"; };
 		63B3A18E1702D6000005495C /* iDownTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iDownTests.m; sourceTree = "<group>"; };
+		63B3A19917030D360005495C /* iDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownViewController.h; sourceTree = "<group>"; };
+		63B3A19A17030D360005495C /* iDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownViewController.m; sourceTree = "<group>"; };
+		63B3A1A0170312F30005495C /* UIColor+iDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+iDown.h"; sourceTree = "<group>"; };
+		63B3A1A1170312F30005495C /* UIColor+iDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+iDown.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,8 @@
 		63B3A1691702D5FF0005495C /* iDown */ = {
 			isa = PBXGroup;
 			children = (
+				63B3A19F170312CB0005495C /* Category */,
+				63B3A19817030C600005495C /* iDownView */,
 				63B3A1721702D5FF0005495C /* iDownAppDelegate.h */,
 				63B3A1731702D5FF0005495C /* iDownAppDelegate.m */,
 				63B3A16A1702D5FF0005495C /* Supporting Files */,
@@ -150,6 +158,24 @@
 				63B3A18A1702D6000005495C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		63B3A19817030C600005495C /* iDownView */ = {
+			isa = PBXGroup;
+			children = (
+				63B3A19917030D360005495C /* iDownViewController.h */,
+				63B3A19A17030D360005495C /* iDownViewController.m */,
+			);
+			name = iDownView;
+			sourceTree = "<group>";
+		};
+		63B3A19F170312CB0005495C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				63B3A1A0170312F30005495C /* UIColor+iDown.h */,
+				63B3A1A1170312F30005495C /* UIColor+iDown.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +290,8 @@
 			files = (
 				63B3A1701702D5FF0005495C /* main.m in Sources */,
 				63B3A1741702D5FF0005495C /* iDownAppDelegate.m in Sources */,
+				63B3A19B17030D360005495C /* iDownViewController.m in Sources */,
+				63B3A1A2170312F30005495C /* UIColor+iDown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
