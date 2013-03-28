@@ -18,9 +18,14 @@
                            alpha:(GLfloat)a / 255.0];
 }
 
-+ (UIColor *) bgColor
++ (UIColor *) iDownDarkGray
 {
     return [UIColor colorFromIntR:128 intG:128 intB:128 intA:255];
+}
+
++ (UIColor *) iDownLightGray
+{
+    return [UIColor colorFromIntR:200 intG:200 intB:200 intA:200];
 }
 
 @end

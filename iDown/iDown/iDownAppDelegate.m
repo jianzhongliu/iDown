@@ -17,7 +17,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    iDownViewController *iDown = [[iDownViewController alloc] init];
+    iDownViewController *iDown = [[iDownViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iDown];
     [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];

@@ -10,6 +10,7 @@
 
 @interface UIColor (iDown)
 
-+ (UIColor *) bgColor;
++ (UIColor *) iDownDarkGray;
++ (UIColor *) iDownLightGray;
 
 @end

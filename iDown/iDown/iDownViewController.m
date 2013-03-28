@@ -9,7 +9,7 @@
 #import "iDownViewController.h"
 #import "UIColor+iDown.h"
 
-@interface iDownViewController ()
+@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -26,7 +26,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         back = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-        [back setBackgroundColor:[UIColor bgColor]];
+        [back setBackgroundColor:[UIColor iDownDarkGray]];
         [self setView:back];
         
         self.navigationItem.title = @"我的下载";
@@ -37,7 +37,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    CGFloat y = 10;
 	
+    allStartBtn = [[UIButton alloc] initWithFrame:CGRectMake(40, y, 100, 30)];
+    [allStartBtn setBackgroundColor:[UIColor iDownLightGray]];
+    [allStartBtn setTitle:@"全部开始" forState:UIControlStateNormal];
+    [allStartBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [back addSubview:allStartBtn];
+    
+    editBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, y, 100, 30)];
+    [editBtn setBackgroundColor:[UIColor iDownLightGray]];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [editBtn addSubview:editBtn];
+    
+    y += 50;
+    
+    downloadTable = [[UITableView alloc] initWithFrame:CGRectMake(0, y, back.frame.size.width, back.frame.size.height - y)
+                                                 style:UITableViewStylePlain];
+    [downloadTable setBackgroundColor:[UIColor iDownDarkGray]];
+    downloadTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    downloadTable.separatorColor = [UIColor iDownLightGray];
+    downloadTable.dataSource = self;
+    downloadTable.delegate = self;
+    [back addSubview:downloadTable];
 }
 
 - (void)didReceiveMemoryWarning
