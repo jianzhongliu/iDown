@@ -25,11 +25,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        back = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-        [back setBackgroundColor:[UIColor iDownDarkGray]];
-        [self setView:back];
-        
-        self.navigationItem.title = @"我的下载";
+
     }
     return self;
 }
@@ -37,6 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"我的下载";
+    
+    back = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+    [back setBackgroundColor:[UIColor iDownDarkGray]];
+    [self setView:back];
     
     CGFloat y = 10;
 	
@@ -50,7 +52,7 @@
     [editBtn setBackgroundColor:[UIColor iDownLightGray]];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [editBtn addSubview:editBtn];
+    [back addSubview:editBtn];
     
     y += 50;
     
@@ -68,6 +70,33 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - tableView
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"iDown";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:identifier];
+    }
+    
+    cell.textLabel.text = @"hello";
+    
+    return cell;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
 }
 
 @end

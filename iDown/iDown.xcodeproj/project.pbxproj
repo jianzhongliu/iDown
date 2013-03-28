@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18941703E6BD00DD22AA /* iDownItem.m */; };
 		63B3A1641702D5FF0005495C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1631702D5FF0005495C /* UIKit.framework */; };
 		63B3A1661702D5FF0005495C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1651702D5FF0005495C /* Foundation.framework */; };
 		63B3A1681702D5FF0005495C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1671702D5FF0005495C /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63AE18931703E6BD00DD22AA /* iDownItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownItem.h; sourceTree = "<group>"; };
+		63AE18941703E6BD00DD22AA /* iDownItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownItem.m; sourceTree = "<group>"; };
 		63B3A1601702D5FF0005495C /* iDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B3A1631702D5FF0005495C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		63B3A1651702D5FF0005495C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -118,10 +121,10 @@
 		63B3A1691702D5FF0005495C /* iDown */ = {
 			isa = PBXGroup;
 			children = (
-				63B3A19F170312CB0005495C /* Category */,
-				63B3A19817030C600005495C /* iDownView */,
 				63B3A1721702D5FF0005495C /* iDownAppDelegate.h */,
 				63B3A1731702D5FF0005495C /* iDownAppDelegate.m */,
+				63B3A19F170312CB0005495C /* Category */,
+				63B3A19817030C600005495C /* iDownView */,
 				63B3A16A1702D5FF0005495C /* Supporting Files */,
 			);
 			path = iDown;
@@ -165,6 +168,8 @@
 			children = (
 				63B3A19917030D360005495C /* iDownViewController.h */,
 				63B3A19A17030D360005495C /* iDownViewController.m */,
+				63AE18931703E6BD00DD22AA /* iDownItem.h */,
+				63AE18941703E6BD00DD22AA /* iDownItem.m */,
 			);
 			name = iDownView;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				63B3A1741702D5FF0005495C /* iDownAppDelegate.m in Sources */,
 				63B3A19B17030D360005495C /* iDownViewController.m in Sources */,
 				63B3A1A2170312F30005495C /* UIColor+iDown.m in Sources */,
+				63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +474,7 @@
 				63B3A1941702D6000005495C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63B3A1951702D6000005495C /* Build configuration list for PBXNativeTarget "iDownTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +483,7 @@
 				63B3A1971702D6000005495C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
