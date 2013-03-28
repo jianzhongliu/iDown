@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18941703E6BD00DD22AA /* iDownItem.m */; };
+		63AE18981703E7A200DD22AA /* UIImage+iDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18971703E7A200DD22AA /* UIImage+iDown.m */; };
+		63AE189D1703E9F600DD22AA /* downloading.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189A1703E9F600DD22AA /* downloading.png */; };
+		63AE189E1703E9F600DD22AA /* failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189B1703E9F600DD22AA /* failed.png */; };
+		63AE189F1703E9F600DD22AA /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189C1703E9F600DD22AA /* paused.png */; };
 		63B3A1641702D5FF0005495C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1631702D5FF0005495C /* UIKit.framework */; };
 		63B3A1661702D5FF0005495C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1651702D5FF0005495C /* Foundation.framework */; };
 		63B3A1681702D5FF0005495C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1671702D5FF0005495C /* CoreGraphics.framework */; };
@@ -39,6 +43,11 @@
 /* Begin PBXFileReference section */
 		63AE18931703E6BD00DD22AA /* iDownItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownItem.h; sourceTree = "<group>"; };
 		63AE18941703E6BD00DD22AA /* iDownItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownItem.m; sourceTree = "<group>"; };
+		63AE18961703E7A200DD22AA /* UIImage+iDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+iDown.h"; sourceTree = "<group>"; };
+		63AE18971703E7A200DD22AA /* UIImage+iDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+iDown.m"; sourceTree = "<group>"; };
+		63AE189A1703E9F600DD22AA /* downloading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downloading.png; path = Images/downloading.png; sourceTree = SOURCE_ROOT; };
+		63AE189B1703E9F600DD22AA /* failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = failed.png; path = Images/failed.png; sourceTree = SOURCE_ROOT; };
+		63AE189C1703E9F600DD22AA /* paused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paused.png; path = Images/paused.png; sourceTree = SOURCE_ROOT; };
 		63B3A1601702D5FF0005495C /* iDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B3A1631702D5FF0005495C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		63B3A1651702D5FF0005495C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -88,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63AE18991703E8BD00DD22AA /* iDownImages */ = {
+			isa = PBXGroup;
+			children = (
+				63AE189A1703E9F600DD22AA /* downloading.png */,
+				63AE189B1703E9F600DD22AA /* failed.png */,
+				63AE189C1703E9F600DD22AA /* paused.png */,
+			);
+			name = iDownImages;
+			sourceTree = "<group>";
+		};
 		63B3A1571702D5FF0005495C = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +152,7 @@
 		63B3A16A1702D5FF0005495C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				63AE18991703E8BD00DD22AA /* iDownImages */,
 				63B3A16B1702D5FF0005495C /* iDown-Info.plist */,
 				63B3A16C1702D5FF0005495C /* InfoPlist.strings */,
 				63B3A16F1702D5FF0005495C /* main.m */,
@@ -179,6 +199,8 @@
 			children = (
 				63B3A1A0170312F30005495C /* UIColor+iDown.h */,
 				63B3A1A1170312F30005495C /* UIColor+iDown.m */,
+				63AE18961703E7A200DD22AA /* UIImage+iDown.h */,
+				63AE18971703E7A200DD22AA /* UIImage+iDown.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -259,6 +281,9 @@
 				63B3A1761702D5FF0005495C /* Default.png in Resources */,
 				63B3A1781702D5FF0005495C /* Default@2x.png in Resources */,
 				63B3A17A1702D5FF0005495C /* Default-568h@2x.png in Resources */,
+				63AE189D1703E9F600DD22AA /* downloading.png in Resources */,
+				63AE189E1703E9F600DD22AA /* failed.png in Resources */,
+				63AE189F1703E9F600DD22AA /* paused.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +323,7 @@
 				63B3A19B17030D360005495C /* iDownViewController.m in Sources */,
 				63B3A1A2170312F30005495C /* UIColor+iDown.m in Sources */,
 				63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */,
+				63AE18981703E7A200DD22AA /* UIImage+iDown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
