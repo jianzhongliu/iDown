@@ -25,7 +25,27 @@
 
 + (UIColor *) iDownLightGray
 {
-    return [UIColor colorFromIntR:200 intG:200 intB:200 intA:200];
+    return [UIColor colorFromIntR:200 intG:200 intB:200 intA:255];
+}
+
++ (UIColor *) iDownDownloadingColor
+{
+    return [UIColor colorFromIntR:99 intG:184 intB:82 intA:255];
+}
+
++ (UIColor *) iDownPausedColor
+{
+    return [UIColor colorFromIntR:87 intG:134 intB:178 intA:255];
+}
+
++ (UIColor *) iDownFailedColor
+{
+    return [UIColor colorFromIntR:247 intG:37 intB:0 intA:255];
+}
+
++ (UIColor *) iDownProgressBackColor
+{
+    return [UIColor colorFromIntR:166 intG:166 intB:166 intA:255];
 }
 
 @end

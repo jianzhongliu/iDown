@@ -20,4 +20,7 @@
 @property (nonatomic, unsafe_unretained) iDownStates state;
 @property (nonatomic, strong) id<iDownStateController> delegate;
 
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, unsafe_unretained) float size;
+
 @end

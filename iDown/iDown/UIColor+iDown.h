@@ -13,4 +13,9 @@
 + (UIColor *) iDownDarkGray;
 + (UIColor *) iDownLightGray;
 
++ (UIColor *) iDownDownloadingColor;
++ (UIColor *) iDownPausedColor;
++ (UIColor *) iDownFailedColor;
++ (UIColor *) iDownProgressBackColor;
+
 @end

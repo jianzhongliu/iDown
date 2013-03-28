@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iDownState.h"
 
 @interface iDownProcessView : UIView
+
+@property (nonatomic, unsafe_unretained) float progress;
+
+- (id) init;
+- (void) setOrigin : (CGPoint) p;
+- (void) switchToState : (iDownStates) state;
+
 
 @end

@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iDownState.h"
+#import "iDownData.h"
 
 
 
 @interface iDownItem : UITableViewCell
+
+@property (nonatomic, strong) iDownData *data;
+
+- (void) switchToState : (iDownStates) state;
 
 @end

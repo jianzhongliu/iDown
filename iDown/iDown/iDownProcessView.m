@@ -7,25 +7,84 @@
 //
 
 #import "iDownProcessView.h"
+#import "UIColor+iDown.h"
+
+#define LENGTH  200
+#define WIDTH   6
 
 @implementation iDownProcessView
+{
+    UIView *backLine;
+    UIView *frontLine;
+    float _progress;
+}
+
+- (id)init
+{
+    return [self initWithFrame:CGRectMake(0, 0, LENGTH, 6)];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        backLine = [[UIView alloc] initWithFrame:self.frame];
+        [backLine setBackgroundColor:[UIColor iDownProgressBackColor]];
+        [self addSubview:backLine];
+        
+        frontLine = [[UIView alloc] initWithFrame:self.frame];
+        [self addSubview:frontLine];
+        
+        _progress = 0;
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void) setOrigin:(CGPoint)p
 {
-    // Drawing code
+    [self setFrame:CGRectMake(p.x, p.y, self.frame.size.width, self.frame.size.height)];
 }
-*/
+
+- (void) switchToState:(iDownStates)state
+{
+    switch (state) {
+        case iDownStateDownloading:
+            [self setHidden:NO];
+            [frontLine setBackgroundColor:[UIColor iDownDownloadingColor]];
+            break;
+            
+        case iDownStateFailed:
+            [self setHidden:NO];
+            [frontLine setBackgroundColor:[UIColor iDownFailedColor]];
+            break;
+            
+        case iDownStatePaused:
+            [self setHidden:NO];
+            [frontLine setBackgroundColor:[UIColor iDownPausedColor]];
+            break;
+        
+        case iDownStateSucceed:
+            [self setHidden:YES];
+            
+        default:
+            break;
+    }
+}
+
+- (float) progress
+{
+    return _progress;
+}
+
+- (void) setProgress:(float)progress
+{
+    if (progress < 0 || progress > 1)
+    {
+        return;
+    }
+    
+    _progress = progress;
+    [frontLine setBounds:CGRectMake(frontLine.frame.origin.x, frontLine.frame.origin.y, progress * LENGTH, WIDTH)];
+}
 
 @end

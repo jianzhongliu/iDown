@@ -8,8 +8,12 @@
 
 #import "iDownViewController.h"
 #import "UIColor+iDown.h"
+#import "iDownData.h"
+#import "iDownItem.h"
 
-@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate>
+#import <QuartzCore/QuartzCore.h>
+
+@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate, iDownStateController>
 
 @end
 
@@ -19,6 +23,7 @@
     UIButton *allStartBtn;
     UIButton *editBtn;
     UITableView *downloadTable;
+    NSMutableArray *downloadItems;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,23 +43,30 @@
     
     back = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
     [back setBackgroundColor:[UIColor iDownDarkGray]];
+    back.userInteractionEnabled = YES;
     [self setView:back];
     
     CGFloat y = 10;
 	
-    allStartBtn = [[UIButton alloc] initWithFrame:CGRectMake(40, y, 100, 30)];
+    allStartBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, y, 120, 30)];
     [allStartBtn setBackgroundColor:[UIColor iDownLightGray]];
     [allStartBtn setTitle:@"全部开始" forState:UIControlStateNormal];
     [allStartBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [allStartBtn addTarget:self action:@selector(didTapAllStart) forControlEvents:UIControlEventTouchUpInside];
+    allStartBtn.layer.masksToBounds = YES;
+    allStartBtn.layer.cornerRadius = 4;
     [back addSubview:allStartBtn];
     
-    editBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, y, 100, 30)];
+    editBtn = [[UIButton alloc] initWithFrame:CGRectMake(back.frame.size.width - 30 - 120, y, 120, 30)];
     [editBtn setBackgroundColor:[UIColor iDownLightGray]];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [editBtn addTarget:self action:@selector(didTapEdit) forControlEvents:UIControlEventTouchUpInside];
+    editBtn.layer.masksToBounds = YES;
+    editBtn.layer.cornerRadius = 4;
     [back addSubview:editBtn];
     
-    y += 50;
+    y += 40;
     
     downloadTable = [[UITableView alloc] initWithFrame:CGRectMake(0, y, back.frame.size.width, back.frame.size.height - y)
                                                  style:UITableViewStylePlain];
@@ -64,6 +76,30 @@
     downloadTable.dataSource = self;
     downloadTable.delegate = self;
     [back addSubview:downloadTable];
+    
+    downloadItems = [[NSMutableArray alloc] init];
+    [self buildTestData];
+}
+
+- (void) buildTestData
+{
+    iDownData *d1 = [[iDownData alloc] init];
+    d1.delegate = self;
+    d1.name = @"天天动听";
+    d1.size = 100.1;
+    [downloadItems addObject:d1];
+    
+    iDownData *d2 = [[iDownData alloc] init];
+    d2.delegate = self;
+    d2.name = @"天天星愿";
+    d2.size = 50;
+    [downloadItems addObject:d2];
+    
+    iDownData *d3 = [[iDownData alloc] init];
+    d3.delegate = self;
+    d3.name = @"天天向上";
+    d3.size = 50;
+    [downloadItems addObject:d3];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,23 +116,48 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:identifier];
+        cell = [[iDownItem alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    cell.textLabel.text = @"hello";
-    
+    iDownItem *item = (iDownItem *)cell;
+    item.data = [downloadItems objectAtIndex:indexPath.row];
+    [item switchToState:iDownStateDownloading];
     return cell;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [downloadItems count];
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+}
+
+#pragma mark - iDownData
+
+- (void) didChangeToState:(iDownStates)state
+{
+    
+}
+
+#pragma mark - button
+
+- (void) didTapAllStart
+{
+    NSLog(@"did tap all start");
+}
+
+- (void) didTapEdit
+{
+    NSLog(@"did tap edit");
 }
 
 @end

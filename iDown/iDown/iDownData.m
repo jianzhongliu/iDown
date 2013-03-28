@@ -10,4 +10,7 @@
 
 @implementation iDownData
 
+@synthesize name = _name;
+@synthesize size = _size;
+
 @end
