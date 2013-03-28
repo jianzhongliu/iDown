@@ -1,5 +1,5 @@
 //
-//  iDownItem.h
+//  iDownProcessView.h
 //  iDown
 //
 //  Created by David Tang on 13-3-28.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-
-@interface iDownItem : UITableViewCell
+@interface iDownProcessView : UIView
 
 @end

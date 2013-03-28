@@ -1,15 +1,13 @@
 //
-//  iDownItem.h
+//  iDownloader.h
 //  iDown
 //
 //  Created by David Tang on 13-3-28.
 //  Copyright (c) 2013年 David Tang. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-
-
-@interface iDownItem : UITableViewCell
+@interface iDownloader : NSObject
 
 @end

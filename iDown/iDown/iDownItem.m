@@ -10,7 +10,9 @@
 
 @implementation iDownItem
 {
-    
+    UIImageView *stateIcon;
+    UILabel *stateLabel;
+    UIView *process;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
