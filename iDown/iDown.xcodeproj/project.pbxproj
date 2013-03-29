@@ -17,6 +17,7 @@
 		63AE18AA1703EFEB00DD22AA /* iDownState.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18A91703EFEB00DD22AA /* iDownState.m */; };
 		63AE18AE1703F43800DD22AA /* iDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18AD1703F43800DD22AA /* iDownloader.m */; };
 		63AE18B017045E7B00DD22AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63AE18AF17045E7B00DD22AA /* QuartzCore.framework */; };
+		63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18B5170462FC00DD22AA /* iDownManager.m */; };
 		63B3A1641702D5FF0005495C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1631702D5FF0005495C /* UIKit.framework */; };
 		63B3A1661702D5FF0005495C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1651702D5FF0005495C /* Foundation.framework */; };
 		63B3A1681702D5FF0005495C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3A1671702D5FF0005495C /* CoreGraphics.framework */; };
@@ -62,6 +63,8 @@
 		63AE18AC1703F43800DD22AA /* iDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownloader.h; sourceTree = "<group>"; };
 		63AE18AD1703F43800DD22AA /* iDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownloader.m; sourceTree = "<group>"; };
 		63AE18AF17045E7B00DD22AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		63AE18B4170462FC00DD22AA /* iDownManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownManager.h; sourceTree = "<group>"; };
+		63AE18B5170462FC00DD22AA /* iDownManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownManager.m; sourceTree = "<group>"; };
 		63B3A1601702D5FF0005495C /* iDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B3A1631702D5FF0005495C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		63B3A1651702D5FF0005495C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -145,6 +148,8 @@
 			children = (
 				63AE18AC1703F43800DD22AA /* iDownloader.h */,
 				63AE18AD1703F43800DD22AA /* iDownloader.m */,
+				63AE18B4170462FC00DD22AA /* iDownManager.h */,
+				63AE18B5170462FC00DD22AA /* iDownManager.m */,
 			);
 			name = iDownloader;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				63AE18A71703EFD500DD22AA /* iDownData.m in Sources */,
 				63AE18AA1703EFEB00DD22AA /* iDownState.m in Sources */,
 				63AE18AE1703F43800DD22AA /* iDownloader.m in Sources */,
+				63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
