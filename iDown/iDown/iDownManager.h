@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "iDownloader.h"
 
 @interface iDownManager : NSObject
 
 + (iDownManager *) shared;
-- (void) addDownloadTaskWithUrlString : (NSString *) url;
+- (iDownloader *) addDownloadTaskWithUrlString : (NSString *) url andKey :(NSString *) key;
+
+- (void) allStart;
 
 @end

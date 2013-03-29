@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iDownState.h"
+#import "iDownloader.h"
 
 @interface iDownProcessView : UIView
 

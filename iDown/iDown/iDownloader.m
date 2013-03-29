@@ -14,8 +14,6 @@
 
 @implementation iDownloader
 {
-    NSString *_key;
-    
     NSURL *_url;
     NSURLRequest *_req;
     NSURLConnection *_connection;
@@ -28,6 +26,8 @@
 }
 
 @synthesize delegate = _delegate;
+@synthesize state = _state;
+@synthesize key = _key;
 
 - (id) initWithUrl:(NSURL *)url andKey:(NSString *)key
 {
@@ -39,6 +39,7 @@
         
         _req = [[NSURLRequest alloc] initWithURL:_url];
         _connection = [[NSURLConnection alloc] initWithRequest:_req delegate:self];
+        _state = iDownStateUnknown;
     }
     
     return self;
@@ -46,7 +47,33 @@
 
 - (void) startDownload
 {
-    [_connection start];
+    switch (_state) {
+        case iDownStateDownloading:
+            NSLog(@"[%@] is downloading now, needn't to start", _key);
+            break;
+        
+        case iDownStateFailed:
+            NSLog(@"[%@] is failed now, restart", _key);
+            [_connection start];
+            _state = iDownStateDownloading;
+            NSLog(@"[%@] connection started", _key);
+            break;
+            
+        case iDownStatePaused:
+            NSLog(@"[%@] is paused now, continue", _key);
+            break;
+            
+        case iDownStateSucceed:
+            NSLog(@"[%@] is succeed now, needn't to rstart", _key);
+            break;
+            
+        default:
+            NSLog(@"[%@] isn't started", _key);
+            [_connection start];
+            _state = iDownStateDownloading;
+            NSLog(@"[%@] connection started", _key);
+            break;
+    }
 }
 
 - (void) pauseDownload
@@ -83,6 +110,7 @@
             [_delegate didChangeDownloadSpeedTo:_speed withKey:_key];
             currentDownloadSpeed = _speed;
         }
+        NSLog(@"[%@] received data [%.2fk], current speed [%.2fk/s]", _key, (double) [data length] / 1024.0, _speed);
     }
 }
 
@@ -97,14 +125,19 @@
     {
         [_delegate didChangeDownloadProgress:0 withKey:_key];
         [_delegate didChangeDownloadSpeedTo:0 withKey:_key];
+        [_delegate didGetDownloadExpectSize: (double) totalLength / 1024.0];
+        NSLog(@"[%@] get expected size [%.2fk], begin download", _key, (double) totalLength / 1024.0f);
     }
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    currentTime = [NSDate timeIntervalSinceReferenceDate];
     if (_delegate)
     {
         [_delegate didFinishDownloadData:_data withKey:_key];
+        NSLog(@"[%@] finished download, size [%.2fk], cost time [%.2fs], average speed [%.2fk/s]",
+              _key, (double) totalLength / 1024.0f, currentTime - startTime, currentDownloadSpeed);
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63A27F071705714300F8E24C /* iDownDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A27F061705714300F8E24C /* iDownDataManager.m */; };
 		63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18941703E6BD00DD22AA /* iDownItem.m */; };
 		63AE18981703E7A200DD22AA /* UIImage+iDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18971703E7A200DD22AA /* UIImage+iDown.m */; };
 		63AE189D1703E9F600DD22AA /* downloading.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189A1703E9F600DD22AA /* downloading.png */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63A27F051705714300F8E24C /* iDownDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownDataManager.h; sourceTree = "<group>"; };
+		63A27F061705714300F8E24C /* iDownDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownDataManager.m; sourceTree = "<group>"; };
 		63AE18931703E6BD00DD22AA /* iDownItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownItem.h; sourceTree = "<group>"; };
 		63AE18941703E6BD00DD22AA /* iDownItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownItem.m; sourceTree = "<group>"; };
 		63AE18961703E7A200DD22AA /* UIImage+iDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+iDown.h"; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 			children = (
 				63AE18A51703EFD500DD22AA /* iDownData.h */,
 				63AE18A61703EFD500DD22AA /* iDownData.m */,
+				63A27F051705714300F8E24C /* iDownDataManager.h */,
+				63A27F061705714300F8E24C /* iDownDataManager.m */,
 			);
 			name = iDownData;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				63AE18AA1703EFEB00DD22AA /* iDownState.m in Sources */,
 				63AE18AE1703F43800DD22AA /* iDownloader.m in Sources */,
 				63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */,
+				63A27F071705714300F8E24C /* iDownDataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

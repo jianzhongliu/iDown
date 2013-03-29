@@ -8,16 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum
-{
-    iDownStateDownloading,
-    iDownStatePaused,
-    iDownStateFailed,
-    iDownStateSucceed,
-    iDownStateUnknown,
-    
-} iDownStates;
-
 @interface iDownState : NSObject
 
 @end

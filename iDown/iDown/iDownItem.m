@@ -9,6 +9,11 @@
 #import "iDownItem.h"
 #import "iDownProcessView.h"
 #import "UIImage+iDown.h"
+#import "iDownloader.h"
+
+@interface iDownItem () <iDownloaderEvent, iDownStateController>
+
+@end
 
 @implementation iDownItem
 {
@@ -101,8 +106,61 @@
 - (void) setData:(iDownData *)data
 {
     _data = data;
-    [nameLabel setText:_data.name];
-    [sizeLabel setText:[NSString stringWithFormat:@"0/%.1fM", _data.size]];
+    _data.delegate = self;
+    [_data setDownloadEventHandler:self];
+    [nameLabel setText:_data.key];
+    [sizeLabel setText:[NSString stringWithFormat:@"0/0"]];
+}
+
+#pragma mark - iDownData
+
+- (void) didChangeToState:(iDownStates)state withKey:(NSString *)key
+{
+    [self switchToState:state];
+}
+
+#pragma mark - iDownEvent
+
+- (void) didChangeDownloadProgress:(float)progress withKey:(NSString *)key
+{
+    process.progress = progress;
+}
+
+- (void) didChangeDownloadSpeedTo:(float)speed withKey:(NSString *)key
+{
+
+}
+
+- (void) didFinishDownloadData:(NSData *)data withKey:(NSString *)key
+{
+    
+}
+
+- (void) didFinishDownloadDataSize : (double) sizeKB
+{
+    [sizeLabel setText:[NSString stringWithFormat:@"%@/%@", [self stringFromSize:sizeKB], [self stringFromSize:_data.size]]];
+}
+
+- (void) didGetDownloadExpectSize:(float)sizeKB
+{
+    _data.size = sizeKB;
+    [sizeLabel setText:[NSString stringWithFormat:@"0/%@", [self stringFromSize:_data.size]]];
+}
+
+- (NSString *) stringFromSize : (float) sizeKB
+{
+    if (sizeKB > 1048576.0f)
+    {
+        return [NSString stringWithFormat:@"%.1fG", sizeKB / 1048576.0f];
+    }
+    else if (sizeKB > 1024.0f)
+    {
+        return [NSString stringWithFormat:@"%.1fM", sizeKB / 1024.0f];
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%.1fK", sizeKB];
+    }
 }
 
 @end

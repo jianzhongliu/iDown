@@ -10,10 +10,12 @@
 #import "UIColor+iDown.h"
 #import "iDownData.h"
 #import "iDownItem.h"
+#import "iDownDataManager.h"
+#import "iDownManager.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate, iDownStateController>
+@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -23,7 +25,6 @@
     UIButton *allStartBtn;
     UIButton *editBtn;
     UITableView *downloadTable;
-    NSMutableArray *downloadItems;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -77,29 +78,22 @@
     downloadTable.delegate = self;
     [back addSubview:downloadTable];
     
-    downloadItems = [[NSMutableArray alloc] init];
     [self buildTestData];
 }
 
 - (void) buildTestData
 {
-    iDownData *d1 = [[iDownData alloc] init];
-    d1.delegate = self;
-    d1.name = @"天天动听";
-    d1.size = 100.1;
-    [downloadItems addObject:d1];
+    iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://ww3.sinaimg.cn/bmiddle/884f7263jw1e35g0jgkupj.jpg"];
+    d1.key = @"菠萝和凤梨";
+    [[iDownDataManager shared] appendData:d1];
     
-    iDownData *d2 = [[iDownData alloc] init];
-    d2.delegate = self;
-    d2.name = @"天天星愿";
-    d2.size = 50;
-    [downloadItems addObject:d2];
+    iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ww2.sinaimg.cn/bmiddle/539062f7gw1e3689bgigjj.jpg"];
+    d2.key = @"人不可貌相";
+    [[iDownDataManager shared] appendData:d2];
     
-    iDownData *d3 = [[iDownData alloc] init];
-    d3.delegate = self;
-    d3.name = @"天天向上";
-    d3.size = 50;
-    [downloadItems addObject:d3];
+    iDownData *d3 = [[iDownData alloc] initWithUrl:@"http://ww4.sinaimg.cn/bmiddle/6b13f227jw1e36rdsvb15j.jpg"];
+    d3.key = @"名字";
+    [[iDownDataManager shared] appendData:d3];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,8 +115,7 @@
     }
     
     iDownItem *item = (iDownItem *)cell;
-    item.data = [downloadItems objectAtIndex:indexPath.row];
-    [item switchToState:iDownStateDownloading];
+    item.data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
     return cell;
 }
 
@@ -133,7 +126,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [downloadItems count];
+    return [[iDownDataManager shared] count];
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -141,11 +134,13 @@
     return 1;
 }
 
-#pragma mark - iDownData
-
-- (void) didChangeToState:(iDownStates)state
+- (iDownItem *) cellForKey : (NSString *) key
 {
+    NSUInteger index = [[iDownDataManager shared] indexOfKey:key];
+    if (index == NSNotFound)
+        return NULL;
     
+    return (iDownItem *)[downloadTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
 }
 
 #pragma mark - button
@@ -153,6 +148,7 @@
 - (void) didTapAllStart
 {
     NSLog(@"did tap all start");
+    [[iDownManager shared] allStart];
 }
 
 - (void) didTapEdit
