@@ -45,20 +45,23 @@
     NSURL *_url = [[NSURL alloc] initWithString:url];
     
     iDownloader *_downloader = [[iDownloader alloc] initWithUrl:_url andKey:key];
-    [_downloader startDownload];
     [_items setObject:_downloader forKey:key];
-    
+    NSLog(@"%s-added [%@] to download list", __FUNCTION__, key);
     return _downloader;
 }
 
 - (void) allStart
 {
-    iDownloader *_downloader;
     for (NSObject *key in [_items keyEnumerator])
     {
-        _downloader = [_items objectForKey:key];
-        [_downloader startDownload];
+        [self startDownloadWithKey: (NSString *) key];
     }
+}
+
+- (void) startDownloadWithKey:(NSString *)key
+{
+    iDownloader *_downloader = [_items objectForKey:key];
+    [_downloader startDownload];;
 }
 
 @end

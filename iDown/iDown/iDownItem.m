@@ -21,6 +21,7 @@
     UILabel *stateLabel;
     UILabel *nameLabel;
     UILabel *sizeLabel;
+    UILabel *speedLabel;
     iDownProcessView *process;
     
     iDownData *_data;
@@ -45,6 +46,13 @@
         [stateLabel setFont:[UIFont systemFontOfSize:10.0f]];
         [self.contentView addSubview:stateLabel];
         
+        speedLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 35, 50, 10)];
+        [speedLabel setBackgroundColor:[UIColor clearColor]];
+        [speedLabel setTextAlignment:NSTextAlignmentLeft];
+        [speedLabel setTextColor:[UIColor whiteColor]];
+        [speedLabel setFont:[UIFont systemFontOfSize:10.0f]];
+        [self.contentView addSubview:speedLabel];
+        
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 160, 15)];
         [nameLabel setBackgroundColor:[UIColor clearColor]];
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
@@ -52,7 +60,7 @@
         [nameLabel setFont:[UIFont systemFontOfSize:15.0f]];
         [self.contentView addSubview:nameLabel];
         
-        sizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 23, 80, 10)];
+        sizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width - 20 - 80, 23, 80, 10)];
         [sizeLabel setBackgroundColor:[UIColor clearColor]];
         [sizeLabel setTextAlignment:NSTextAlignmentLeft];
         [sizeLabel setTextColor:[UIColor whiteColor]];
@@ -92,8 +100,10 @@
         case iDownStateSucceed:
             stateIcon.image = [UIImage iDownIconDownloading];
             stateLabel.text = @"下载完成";
+            break;
             
         default:
+            stateLabel.text = @"未开始";
             break;
     }
 }
@@ -128,12 +138,12 @@
 
 - (void) didChangeDownloadSpeedTo:(float)speed withKey:(NSString *)key
 {
-
+    [speedLabel setText:[NSString stringWithFormat:@"%@/s", [self stringFromSize:speed]]];
 }
 
 - (void) didFinishDownloadData:(NSData *)data withKey:(NSString *)key
 {
-    
+    [self switchToState:iDownStateSucceed];
 }
 
 - (void) didFinishDownloadDataSize : (double) sizeKB
@@ -145,6 +155,7 @@
 {
     _data.size = sizeKB;
     [sizeLabel setText:[NSString stringWithFormat:@"0/%@", [self stringFromSize:_data.size]]];
+    [self switchToState:iDownStateDownloading];
 }
 
 - (NSString *) stringFromSize : (float) sizeKB

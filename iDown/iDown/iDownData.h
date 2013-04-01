@@ -28,4 +28,6 @@
 - (id) initWithUrl : (NSString *) urlString;
 - (void) setDownloadEventHandler : (id<iDownloaderEvent>) delegate;
 
+- (void) startDownload;
+
 @end

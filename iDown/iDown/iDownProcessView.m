@@ -9,7 +9,7 @@
 #import "iDownProcessView.h"
 #import "UIColor+iDown.h"
 
-#define LENGTH  200
+#define LENGTH  160
 #define WIDTH   6
 
 @implementation iDownProcessView
@@ -43,6 +43,8 @@
 - (void) setOrigin:(CGPoint)p
 {
     [self setFrame:CGRectMake(p.x, p.y, self.frame.size.width, self.frame.size.height)];
+    [backLine setBounds:self.bounds];
+    [frontLine setBounds:self.bounds];
 }
 
 - (void) switchToState:(iDownStates)state
@@ -64,7 +66,7 @@
             break;
         
         case iDownStateSucceed:
-            [self setHidden:YES];
+//            [self setHidden:YES];
             
         default:
             break;
@@ -84,7 +86,7 @@
     }
     
     _progress = progress;
-    [frontLine setBounds:CGRectMake(frontLine.frame.origin.x, frontLine.frame.origin.y, progress * LENGTH, WIDTH)];
+    [frontLine setFrame:CGRectMake(frontLine.frame.origin.x, frontLine.frame.origin.y, progress * LENGTH, WIDTH)];
 }
 
 @end

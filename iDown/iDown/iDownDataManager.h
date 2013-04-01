@@ -20,5 +20,6 @@
 - (void) appendData : (iDownData *) data;
 - (void) removeDataWithKey : (NSString *) key;
 - (NSUInteger) count;
+- (void) allStartDownload;
 
 @end

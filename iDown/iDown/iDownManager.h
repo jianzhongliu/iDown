@@ -14,6 +14,7 @@
 + (iDownManager *) shared;
 - (iDownloader *) addDownloadTaskWithUrlString : (NSString *) url andKey :(NSString *) key;
 
+- (void) startDownloadWithKey : (NSString *) key;
 - (void) allStart;
 
 @end

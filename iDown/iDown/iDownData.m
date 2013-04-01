@@ -65,4 +65,13 @@
     _downloader.key = _key;
 }
 
+- (void) startDownload
+{
+    bool started = [_downloader startDownload];
+    if (_delegate && started)
+    {
+        [_delegate didChangeToState:iDownStateDownloading withKey:_key];
+    }
+}
+
 @end

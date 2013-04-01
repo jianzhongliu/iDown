@@ -83,8 +83,8 @@
 
 - (void) buildTestData
 {
-    iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://ww3.sinaimg.cn/bmiddle/884f7263jw1e35g0jgkupj.jpg"];
-    d1.key = @"菠萝和凤梨";
+    iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://www.dongting.com/files/ttpod-setup.exe"];
+    d1.key = @"天天动听";
     [[iDownDataManager shared] appendData:d1];
     
     iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ww2.sinaimg.cn/bmiddle/539062f7gw1e3689bgigjj.jpg"];
@@ -116,6 +116,7 @@
     
     iDownItem *item = (iDownItem *)cell;
     item.data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
+    [item switchToState:iDownStateUnknown];
     return cell;
 }
 
@@ -147,13 +148,13 @@
 
 - (void) didTapAllStart
 {
-    NSLog(@"did tap all start");
-    [[iDownManager shared] allStart];
+    NSLog(@"%s-did tap all start", __FUNCTION__);
+    [[iDownDataManager shared] allStartDownload];
 }
 
 - (void) didTapEdit
 {
-    NSLog(@"did tap edit");
+    NSLog(@"%s-did tap edit", __FUNCTION__);
 }
 
 @end

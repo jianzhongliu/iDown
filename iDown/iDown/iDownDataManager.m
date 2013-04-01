@@ -7,6 +7,7 @@
 //
 
 #import "iDownDataManager.h"
+#import "iDownManager.h"
 
 @implementation iDownDataManager
 {
@@ -48,7 +49,7 @@
 
 - (iDownData *) dataAtIndex:(int)index
 {
-    if ([keys count] >= index)
+    if ([keys count] <= index)
         return NULL;
     
     return [dic objectForKey:[keys objectAtIndex:index]];
@@ -74,6 +75,16 @@
 - (NSUInteger) count
 {
     return [keys count];
+}
+
+- (void) allStartDownload
+{
+    iDownData *data;
+    for (NSObject *key in keys)
+    {
+        data = [dic objectForKey:key];
+        [data startDownload];
+    }
 }
 
 @end

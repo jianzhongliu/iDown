@@ -35,8 +35,8 @@ typedef enum
 @property (nonatomic, strong) NSString *key;
 
 - (id) initWithUrl : (NSURL *) url andKey : (NSString *) key;
-- (void) startDownload;
-- (void) pauseDownload;
-- (void) endDownload;
+- (bool) startDownload;
+- (bool) pauseDownload;
+- (bool) endDownload;
 
 @end
