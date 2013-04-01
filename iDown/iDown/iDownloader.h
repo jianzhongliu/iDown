@@ -7,16 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef enum
-{
-    iDownStateDownloading,
-    iDownStatePaused,
-    iDownStateFailed,
-    iDownStateSucceed,
-    iDownStateUnknown,
-    
-} iDownStates;
+#import "iDownStateMachine.h"
 
 @protocol iDownloaderEvent <NSObject>
 
@@ -25,13 +16,14 @@ typedef enum
 - (void) didChangeDownloadProgress : (float) progress withKey : (NSString *) key;
 - (void) didChangeDownloadSpeedTo : (float) speed withKey : (NSString *) key;
 - (void) didGetDownloadExpectSize : (float) sizeKB;
+- (void) didFailedDownloadFile;
+- (void) didPausedDownload;
 
 @end
 
 @interface iDownloader : NSObject
 
 @property (nonatomic, strong) id<iDownloaderEvent> delegate;
-@property (nonatomic, unsafe_unretained, readonly) iDownStates state;
 @property (nonatomic, strong) NSString *key;
 
 - (id) initWithUrl : (NSURL *) url andKey : (NSString *) key;

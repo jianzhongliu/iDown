@@ -77,7 +77,7 @@
     // Configure the view for the selected state
 }
 
-- (void) switchToState : (iDownStates) state
+- (void) switchToState : (iDownState) state
 {
     [process switchToState:state];
 
@@ -124,12 +124,17 @@
 
 #pragma mark - iDownData
 
-- (void) didChangeToState:(iDownStates)state withKey:(NSString *)key
+- (void) didChangeToState:(iDownState)state withKey:(NSString *)key
 {
     [self switchToState:state];
 }
 
 #pragma mark - iDownEvent
+
+- (void) didFailedDownloadFile
+{
+    [self switchToState:iDownStateFailed];
+}
 
 - (void) didChangeDownloadProgress:(float)progress withKey:(NSString *)key
 {
@@ -156,6 +161,11 @@
     _data.size = sizeKB;
     [sizeLabel setText:[NSString stringWithFormat:@"0/%@", [self stringFromSize:_data.size]]];
     [self switchToState:iDownStateDownloading];
+}
+
+- (void) didPausedDownload
+{
+    [self switchToState:iDownStatePaused];
 }
 
 - (NSString *) stringFromSize : (float) sizeKB

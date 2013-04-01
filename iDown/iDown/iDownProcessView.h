@@ -15,7 +15,7 @@
 
 - (id) init;
 - (void) setOrigin : (CGPoint) p;
-- (void) switchToState : (iDownStates) state;
+- (void) switchToState : (iDownState) state;
 
 
 @end

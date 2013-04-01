@@ -47,7 +47,7 @@
     [frontLine setBounds:self.bounds];
 }
 
-- (void) switchToState:(iDownStates)state
+- (void) switchToState:(iDownState)state
 {
     switch (state) {
         case iDownStateDownloading:

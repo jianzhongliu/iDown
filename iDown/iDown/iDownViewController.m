@@ -144,6 +144,16 @@
     return (iDownItem *)[downloadTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
 }
 
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    iDownData *data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
+    if (data)
+    {
+        iDownState state = [data.state nextStateWithEvent:iDownEventUserTappedItem];
+        [data handleState];
+    }
+}
+
 #pragma mark - button
 
 - (void) didTapAllStart

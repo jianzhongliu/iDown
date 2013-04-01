@@ -49,6 +49,7 @@
         }
         
         _downloader = [[iDownManager shared] addDownloadTaskWithUrlString:_urlString andKey:_key];
+        _state = [[iDownStateMachine alloc] initWithState:iDownStateUnknown];
     }
 
     return self;

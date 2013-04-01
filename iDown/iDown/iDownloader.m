@@ -26,7 +26,6 @@
 }
 
 @synthesize delegate = _delegate;
-@synthesize state = _state;
 @synthesize key = _key;
 
 - (id) initWithUrl:(NSURL *)url andKey:(NSString *)key
@@ -39,7 +38,6 @@
         
         _req = [[NSURLRequest alloc] initWithURL:_url];
         _connection = [[NSURLConnection alloc] initWithRequest:_req delegate:self startImmediately:NO];
-        _state = iDownStateUnknown;
     }
     
     return self;
@@ -47,60 +45,18 @@
 
 - (bool) startDownload
 {
-    switch (_state) {
-        case iDownStateDownloading:
-            NSLog(@"%s-[%@] is downloading now, needn't to start", __FUNCTION__, _key);
-            return NO;
-        
-        case iDownStateFailed:
-            NSLog(@"%s-[%@] is failed now, restart", __FUNCTION__, _key);
-            [_connection start];
-            _state = iDownStateDownloading;
-            NSLog(@"%s-[%@] connection started", __FUNCTION__, _key);
-            return YES;
-            
-        case iDownStatePaused:
-            NSLog(@"%s-[%@] is paused now, continue", __FUNCTION__, _key);
-            return NO;
-            
-        case iDownStateSucceed:
-            NSLog(@"%s-[%@] is succeed now, needn't to restart", __FUNCTION__, _key);
-            return NO;
-            
-        default:
-            NSLog(@"%s-[%@] isn't started", __FUNCTION__, _key);
-            [_connection start];
-            _state = iDownStateDownloading;
-            NSLog(@"%s-[%@] connection started", __FUNCTION__, _key);
-            return YES;
-    }
+    [_connection start];
+    NSLog(@"%s-[%@] connection started", __FUNCTION__, _key);
 }
 
 - (bool) pauseDownload
 {
-    switch (_state) {
-        case iDownStateDownloading:
-            NSLog(@"%s-[%@] is downloading now, cancel it", __FUNCTION__, _key);
-            [_connection cancel];
-            NSLog(@"%s-[%@] is canceled", __FUNCTION__, _key);
-            return YES;
-            
-        case iDownStateFailed:
-            NSLog(@"%s-[%@] is failed now, don't need to cancel", __FUNCTION__, _key);
-            return NO;
-            
-        case iDownStatePaused:
-            NSLog(@"%s-[%@] is paused now, don't need to cancel", __FUNCTION__, _key);
-            return NO;
-            
-        case iDownStateSucceed:
-            NSLog(@"%s-[%@] is succeed now, don't need to cancel", __FUNCTION__, _key);
-            return NO;
-            
-        default:
-            NSLog(@"%s-[%@] is succeed now, don't need to cancel", __FUNCTION__, _key);
-            return NO;
+    [_connection cancel];
+    if (_delegate)
+    {
+        [_delegate didPausedDownload];
     }
+    NSLog(@"%s-[%@] is canceled", __FUNCTION__, _key);
 }
 
 - (bool) endDownload
@@ -112,6 +68,10 @@
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    if (_delegate)
+    {
+        [_delegate didFailedDownloadFile];
+    }
     NSLog(@"%s-Connection to [%@] failed, error : %@", __FUNCTION__, [_url absoluteString], error);
 }
 
@@ -156,7 +116,6 @@
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection
 {
     currentTime = [NSDate timeIntervalSinceReferenceDate];
-    _state = iDownStateSucceed;
     if (_delegate)
     {
         [_delegate didFinishDownloadDataSize: (double) totalLength / 1024.0f];

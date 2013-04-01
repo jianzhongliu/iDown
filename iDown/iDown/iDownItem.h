@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iDownState.h"
+#import "iDownStateMachine.h"
 #import "iDownData.h"
 
 
@@ -16,6 +16,6 @@
 
 @property (nonatomic, strong) iDownData *data;
 
-- (void) switchToState : (iDownStates) state;
+- (void) switchToState : (iDownState) state;
 
 @end

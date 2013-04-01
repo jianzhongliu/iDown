@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "iDownState.h"
+#import "iDownStateMachine.h"
 #import "iDownloader.h"
 
 @protocol iDownStateController <NSObject>
 
-- (void) didChangeToState : (iDownStates) state withKey : (NSString *) key;
+- (void) didChangeToState : (iDownState) state withKey : (NSString *) key;
 
 @end
 
 @interface iDownData : NSObject
 
-@property (nonatomic, unsafe_unretained) iDownStates state;
+@property (nonatomic, strong) iDownStateMachine *state;
 @property (nonatomic, strong) id<iDownStateController> delegate;
 @property (nonatomic, readonly) iDownloader *downloader;
 
@@ -29,5 +29,6 @@
 - (void) setDownloadEventHandler : (id<iDownloaderEvent>) delegate;
 
 - (void) startDownload;
+- (void) handleState;
 
 @end

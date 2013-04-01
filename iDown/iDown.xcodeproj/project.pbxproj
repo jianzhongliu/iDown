@@ -15,7 +15,7 @@
 		63AE189F1703E9F600DD22AA /* paused.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189C1703E9F600DD22AA /* paused.png */; };
 		63AE18A21703EC5700DD22AA /* iDownProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18A11703EC5700DD22AA /* iDownProcessView.m */; };
 		63AE18A71703EFD500DD22AA /* iDownData.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18A61703EFD500DD22AA /* iDownData.m */; };
-		63AE18AA1703EFEB00DD22AA /* iDownState.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18A91703EFEB00DD22AA /* iDownState.m */; };
+		63AE18AA1703EFEB00DD22AA /* iDownStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18A91703EFEB00DD22AA /* iDownStateMachine.m */; };
 		63AE18AE1703F43800DD22AA /* iDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18AD1703F43800DD22AA /* iDownloader.m */; };
 		63AE18B017045E7B00DD22AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63AE18AF17045E7B00DD22AA /* QuartzCore.framework */; };
 		63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18B5170462FC00DD22AA /* iDownManager.m */; };
@@ -61,8 +61,8 @@
 		63AE18A11703EC5700DD22AA /* iDownProcessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownProcessView.m; sourceTree = "<group>"; };
 		63AE18A51703EFD500DD22AA /* iDownData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownData.h; sourceTree = "<group>"; };
 		63AE18A61703EFD500DD22AA /* iDownData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownData.m; sourceTree = "<group>"; };
-		63AE18A81703EFEB00DD22AA /* iDownState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownState.h; sourceTree = "<group>"; };
-		63AE18A91703EFEB00DD22AA /* iDownState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownState.m; sourceTree = "<group>"; };
+		63AE18A81703EFEB00DD22AA /* iDownStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownStateMachine.h; sourceTree = "<group>"; };
+		63AE18A91703EFEB00DD22AA /* iDownStateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownStateMachine.m; sourceTree = "<group>"; };
 		63AE18AC1703F43800DD22AA /* iDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownloader.h; sourceTree = "<group>"; };
 		63AE18AD1703F43800DD22AA /* iDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownloader.m; sourceTree = "<group>"; };
 		63AE18AF17045E7B00DD22AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -131,8 +131,8 @@
 		63AE18A31703ED5700DD22AA /* iDownState */ = {
 			isa = PBXGroup;
 			children = (
-				63AE18A81703EFEB00DD22AA /* iDownState.h */,
-				63AE18A91703EFEB00DD22AA /* iDownState.m */,
+				63AE18A81703EFEB00DD22AA /* iDownStateMachine.h */,
+				63AE18A91703EFEB00DD22AA /* iDownStateMachine.m */,
 			);
 			name = iDownState;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 				63AE18981703E7A200DD22AA /* UIImage+iDown.m in Sources */,
 				63AE18A21703EC5700DD22AA /* iDownProcessView.m in Sources */,
 				63AE18A71703EFD500DD22AA /* iDownData.m in Sources */,
-				63AE18AA1703EFEB00DD22AA /* iDownState.m in Sources */,
+				63AE18AA1703EFEB00DD22AA /* iDownStateMachine.m in Sources */,
 				63AE18AE1703F43800DD22AA /* iDownloader.m in Sources */,
 				63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */,
 				63A27F071705714300F8E24C /* iDownDataManager.m in Sources */,
