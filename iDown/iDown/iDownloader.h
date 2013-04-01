@@ -27,8 +27,8 @@
 @property (nonatomic, strong) NSString *key;
 
 - (id) initWithUrl : (NSURL *) url andKey : (NSString *) key;
-- (bool) startDownload;
-- (bool) pauseDownload;
-- (bool) endDownload;
+- (void) startDownload;
+- (void) pauseDownload;
+- (void) endDownload;
 
 @end

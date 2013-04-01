@@ -124,9 +124,9 @@
 
 #pragma mark - iDownData
 
-- (void) didChangeToState:(iDownState)state withKey:(NSString *)key
+- (void) stateChanged
 {
-    [self switchToState:state];
+    [self switchToState:_data.state.state];
 }
 
 #pragma mark - iDownEvent
@@ -134,6 +134,7 @@
 - (void) didFailedDownloadFile
 {
     [self switchToState:iDownStateFailed];
+    [_data handleEvent:iDownEventFailedDownload];
 }
 
 - (void) didChangeDownloadProgress:(float)progress withKey:(NSString *)key
@@ -149,6 +150,7 @@
 - (void) didFinishDownloadData:(NSData *)data withKey:(NSString *)key
 {
     [self switchToState:iDownStateSucceed];
+    [_data handleEvent:iDownEventFinishedDownload];
 }
 
 - (void) didFinishDownloadDataSize : (double) sizeKB

@@ -83,7 +83,7 @@
     for (NSObject *key in keys)
     {
         data = [dic objectForKey:key];
-        [data startDownload];
+        [data handleEvent:iDownEventUserTappedAllStartButton];
     }
 }
 

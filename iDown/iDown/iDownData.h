@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "iDownStateMachine.h"
 #import "iDownloader.h"
+#import "iDownStateMachine.h"
 
 @protocol iDownStateController <NSObject>
 
-- (void) didChangeToState : (iDownState) state withKey : (NSString *) key;
+- (void) stateChanged;
 
 @end
 
@@ -28,7 +29,6 @@
 - (id) initWithUrl : (NSString *) urlString;
 - (void) setDownloadEventHandler : (id<iDownloaderEvent>) delegate;
 
-- (void) startDownload;
-- (void) handleState;
+- (void) handleEvent : (iDownEvent) event;
 
 @end

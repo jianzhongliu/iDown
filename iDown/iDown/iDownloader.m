@@ -43,13 +43,17 @@
     return self;
 }
 
-- (bool) startDownload
+- (void) startDownload
 {
     [_connection start];
+    if (_delegate)
+    {
+        [_delegate didChangeDownloadProgress:0 withKey:_key];
+    }
     NSLog(@"%s-[%@] connection started", __FUNCTION__, _key);
 }
 
-- (bool) pauseDownload
+- (void) pauseDownload
 {
     [_connection cancel];
     if (_delegate)
@@ -59,9 +63,9 @@
     NSLog(@"%s-[%@] is canceled", __FUNCTION__, _key);
 }
 
-- (bool) endDownload
+- (void) endDownload
 {
-    return NO;
+    
 }
 
 #pragma mark - network

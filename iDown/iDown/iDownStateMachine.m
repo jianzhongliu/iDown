@@ -12,7 +12,7 @@
 
 @synthesize state = _state;
 
-- (id) initWithState:(iDownStates)state
+- (id) initWithState:(iDownState)state
 {
     self = [super init];
     if (self)
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (iDownStates) nextStateWithEvent:(iDownEvent)event
+- (iDownState) nextStateWithEvent:(iDownEvent)event
 {
     switch (event) {
         case iDownEventUserTappedItem:
@@ -32,6 +32,13 @@
                 _state = iDownStatePaused;
             }
             else if (_state == iDownStatePaused || _state == iDownStateFailed)
+            {
+                _state = iDownStateDownloading;
+            }
+            break;
+            
+        case iDownEventUserTappedAllStartButton:
+            if (_state == iDownStatePaused || _state == iDownStateUnknown)
             {
                 _state = iDownStateDownloading;
             }

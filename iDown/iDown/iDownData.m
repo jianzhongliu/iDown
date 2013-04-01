@@ -55,6 +55,8 @@
     return self;
 }
 
+#pragma mark - getter/setter
+
 - (void) setDownloadEventHandler:(id<iDownloaderEvent>)delegate
 {
     _downloader.delegate = delegate;
@@ -66,13 +68,56 @@
     _downloader.key = _key;
 }
 
-- (void) startDownload
+#pragma mark - interfaces
+
+- (void) handleEvent:(iDownEvent)event
 {
-    bool started = [_downloader startDownload];
-    if (_delegate && started)
-    {
-        [_delegate didChangeToState:iDownStateDownloading withKey:_key];
+    [_state nextStateWithEvent:event];
+    [self handleNextState];
+}
+
+#pragma mark - privates
+
+- (void) handleNextState
+{
+    switch (_state.state) {
+        case iDownStateDownloading:
+            [self startDownload];
+            break;
+            
+        case iDownStatePaused:
+            [self pauseDownload];
+            break;
+            
+        case iDownStateSucceed:
+            break;
+            
+        case iDownStateFailed:
+            break;
+            
+        default:
+            break;
     }
 }
+
+- (void) startDownload
+{
+    if (_delegate)
+    {
+        [_delegate stateChanged];
+    }
+    [_downloader startDownload];
+}
+
+- (void) pauseDownload
+{
+    if (_delegate)
+    {
+        [_delegate stateChanged];
+    }
+    [_downloader pauseDownload];
+}
+
+
 
 @end

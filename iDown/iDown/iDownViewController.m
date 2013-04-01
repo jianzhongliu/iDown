@@ -149,8 +149,7 @@
     iDownData *data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
     if (data)
     {
-        iDownState state = [data.state nextStateWithEvent:iDownEventUserTappedItem];
-        [data handleState];
+        [data handleEvent:iDownEventUserTappedItem];
     }
 }
 
