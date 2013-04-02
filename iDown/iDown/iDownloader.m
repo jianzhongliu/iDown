@@ -127,13 +127,14 @@
             [_delegate didChangeDownloadSpeedTo:_speed withKey:_key];
             currentDownloadSpeed = _speed;
         }
-//        NSLog(@"%s-[%@] received data [%.2fk], current speed [%.2fk/s]", __FUNCTION__, _key, (double) [data length] / 1024.0, _speed);
+        NSLog(@"%s-[%@] received data [%.2fk], current speed [%.2fk/s], current size [%.2fk/%.2fk]",
+              __FUNCTION__, _key, (double) [data length] / 1024.0f, _speed,
+              [packet currentSizeKBWithBackup:backupPacket], [packet totalSizeKBWithBackup:backupPacket]);
     }
     
     if (_storageDelegate)
     {
         [_storageDelegate reportData:[packet buffToWriteWithBackup:backupPacket isComplete:NO]];
-        packet.data = [[NSMutableData alloc] init];
     }
 }
 

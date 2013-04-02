@@ -18,7 +18,9 @@
     NSString *_urlString;
     NSFileHandle *_fileHandle;
     NSString *_filePath;
-    bool fileCreated;
+    bool _fileCreated;
+    
+    unsigned long long _storedLength;
 }
 
 @synthesize key = _key;
@@ -40,7 +42,7 @@
     {
         _urlString = urlString;
         _key = NULL;
-        fileCreated = NO;
+        _fileCreated = NO;
         
         for (int i = [_urlString length]; i > 0; -- i)
         {
@@ -145,11 +147,15 @@
 
 - (void) reportData:(NSData *)data
 {
-    @synchronized(self)
-    {
-        [_fileHandle seekToEndOfFile];
-        [_fileHandle writeData:data];
-    }
+    if (!data)
+        return;
+        
+    _storedLength += [data length];
+    [_fileHandle seekToEndOfFile];
+    [_fileHandle writeData:data];
+    
+    NSLog(@"%s-[%@] write from [%lld] for [%d] length",
+        __FUNCTION__, _filePath, _storedLength, [data length]);
 }
 
 - (void) reportFileName:(NSString *)name
@@ -158,7 +164,7 @@
     if (!fileName)
         fileName = _key;
     
-    if (!fileCreated)
+    if (!_fileCreated)
     {
         NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentDirectory = [directoryPaths objectAtIndex:0];
@@ -174,9 +180,10 @@
         [fileManager createFileAtPath:filePath contents:nil attributes:nil];
         NSLog(@"%s-File [%@] created", __FUNCTION__, filePath);
 
-        fileCreated = YES;
+        _fileCreated = YES;
         _fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
         _filePath = filePath;
+        _storedLength = 0;
     }
 }
 
