@@ -10,3 +10,14 @@ Setup project, create requirement and design document.
 Modify document according to the advice of mentor.
 Construct the project, four components and some categories.
 
+2013.3.29
+Build simple download module.
+Build data manage module.
+
+2013.4.1
+Build status machine.
+Finish simple download module, start deal with continuous downloading feature.
+
+2013.4.2
+Finish continuous downloading feature.
+Correct the wrong time table in document.
