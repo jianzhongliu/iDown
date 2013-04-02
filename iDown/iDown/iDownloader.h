@@ -21,9 +21,19 @@
 
 @end
 
+@protocol iDownloadStorage <NSObject>
+
+- (void) reportData : (NSData *) data;
+- (void) reportFileName : (NSString *) name;
+- (void) reportComplete;
+
+@end
+
 @interface iDownloader : NSObject
 
-@property (nonatomic, strong) id<iDownloaderEvent> delegate;
+@property (nonatomic, strong) id<iDownloaderEvent> eventDelegate;
+@property (nonatomic, strong) id<iDownloadStorage> storageDelegate;
+@property (nonatomic, unsafe_unretained) long long storageBuffLength;
 @property (nonatomic, strong) NSString *key;
 
 - (id) initWithUrl : (NSURL *) url andKey : (NSString *) key;

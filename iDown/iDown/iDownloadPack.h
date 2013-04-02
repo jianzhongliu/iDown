@@ -17,6 +17,7 @@
 @property (nonatomic, unsafe_unretained) NSTimeInterval currentTime;
 @property (nonatomic, unsafe_unretained) long long totalLength;
 @property (nonatomic, unsafe_unretained) long long currentLength;
+@property (nonatomic, unsafe_unretained) double minSizeKBForStore;
 
 @property (nonatomic, unsafe_unretained, readonly) double downloadSpeed;
 @property (nonatomic, unsafe_unretained, readonly) double downloadTime;
@@ -27,6 +28,8 @@
 - (double) totalSizeKBWithBackup : (iDownloadPack *) backupPack;
 - (double) timeWithBackup : (iDownloadPack *) backupPack;
 - (double) progressWithBackup : (iDownloadPack *) backupPack;
+
+- (NSData *) buffToWriteWithBackup : (iDownloadPack *) backupPack isComplete : (bool) complete;
 
 - (bool) appendProgressWithPack : (iDownloadPack *) newPack;
 

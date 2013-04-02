@@ -23,8 +23,10 @@
     double currentDownloadSpeed;
 }
 
-@synthesize delegate = _delegate;
+@synthesize eventDelegate = _delegate;
+@synthesize storageDelegate = _storageDelegate;
 @synthesize key = _key;
+@synthesize storageBuffLength = _storageBuffLength;
 
 - (id) initWithUrl:(NSURL *)url andKey:(NSString *)key
 {
@@ -127,6 +129,12 @@
         }
 //        NSLog(@"%s-[%@] received data [%.2fk], current speed [%.2fk/s]", __FUNCTION__, _key, (double) [data length] / 1024.0, _speed);
     }
+    
+    if (_storageDelegate)
+    {
+        [_storageDelegate reportData:[packet buffToWriteWithBackup:backupPacket isComplete:NO]];
+        packet.data = [[NSMutableData alloc] init];
+    }
 }
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -150,6 +158,11 @@
         [_delegate didGetDownloadExpectSize: [packet totalSizeKBWithBackup:backupPacket]];
         NSLog(@"%s-[%@] get expected size [%.2fk], begin download", __FUNCTION__, _key, [packet totalSizeKBWithBackup:backupPacket]);
     }
+    
+    if (_storageDelegate)
+    {
+        [_storageDelegate reportFileName: [_res suggestedFilename]];
+    }
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection
@@ -162,6 +175,12 @@
         [_delegate didFinishDownloadData: packet.data withKey:_key];//to be detail discussed
         NSLog(@"%s-[%@] finished download, size [%.2fk], cost time [%.2fs], average speed [%.2fk/s]",
               __FUNCTION__, _key, [packet currentSizeKBWithBackup:backupPacket], [packet timeWithBackup:backupPacket], [packet speedKBPSWithBackup:backupPacket]);
+    }
+    
+    if (_storageDelegate)
+    {
+        [_storageDelegate reportData:[packet buffToWriteWithBackup:backupPacket isComplete:YES]];
+        [_storageDelegate reportComplete];
     }
 }
 

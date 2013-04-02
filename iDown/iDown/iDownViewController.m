@@ -85,15 +85,15 @@
 {
     iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://www.dongting.com/files/ttpod-setup.exe"];
     d1.key = @"天天动听";
-    [[iDownDataManager shared] appendData:d1];
+    [[iDownDataManager shared] appendItem:d1];
     
     iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ttplayer.qianqian.com/download/ttpsetup-95024068.exe"];
     d2.key = @"千千静听";
-    [[iDownDataManager shared] appendData:d2];
+    [[iDownDataManager shared] appendItem:d2];
     
     iDownData *d3 = [[iDownData alloc] initWithUrl:@"http://ww4.sinaimg.cn/bmiddle/6b13f227jw1e36rdsvb15j.jpg"];
     d3.key = @"名字";
-    [[iDownDataManager shared] appendData:d3];
+    [[iDownDataManager shared] appendItem:d3];
 }
 
 - (void)didReceiveMemoryWarning

@@ -60,7 +60,7 @@
     return [dic objectForKey:key];
 }
 
-- (void) appendData:(iDownData *)data
+- (void) appendItem:(iDownData *)data
 {
     [keys addObject:data.key];
     [dic setObject:data forKey:data.key];

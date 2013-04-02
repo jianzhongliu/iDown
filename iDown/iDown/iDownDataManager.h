@@ -17,7 +17,7 @@
 - (iDownData *) dataWithKey : (NSString *) key;
 - (NSUInteger) indexOfKey : (NSString *) key;
 
-- (void) appendData : (iDownData *) data;
+- (void) appendItem : (iDownData *) data;
 - (void) removeDataWithKey : (NSString *) key;
 - (NSUInteger) count;
 - (void) allStartDownload;

@@ -20,6 +20,7 @@
 @synthesize currentTime = _currentTime;
 @synthesize totalLength = _totalLength;
 @synthesize currentLength = _currentLength;
+@synthesize minSizeKBForStore = _minSizeKBForStore;
 
 - (id) init
 {
@@ -27,6 +28,7 @@
     if (self)
     {
         backupTime = 0;
+        _minSizeKBForStore = 500;
     }
     return self;
 }
@@ -93,6 +95,36 @@
     }
     
     return NO;
+}
+
+- (NSData *) buffToWriteWithBackup:(iDownloadPack *)backupPack isComplete:(bool)complete
+{
+    long long tempLength = [_data length];
+    if (backupPack)
+    {
+        tempLength += [backupPack.data length];
+    }
+    
+    double sizeKB = (double) tempLength / 1024.0f;
+    if (sizeKB > _minSizeKBForStore || complete)
+    {
+        NSMutableData *ret;
+        if (backupPack)
+        {
+            ret = backupPack.data;
+            [ret appendData:_data];
+            backupPack.data = [[NSMutableData alloc] init];
+            _data = [[NSMutableData alloc] init];
+        }
+        else
+        {
+            ret = _data;
+            _data = [[NSMutableData alloc] init];
+        }
+        return ret;
+    }
+
+    return nil;
 }
 
 @end
