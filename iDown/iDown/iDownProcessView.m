@@ -67,6 +67,11 @@
         
         case iDownStateSucceed:
 //            [self setHidden:YES];
+            break;
+            
+        case iDownStateUnknown:
+            self.progress = 0;
+            break;
             
         default:
             break;

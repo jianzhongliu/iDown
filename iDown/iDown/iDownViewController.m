@@ -87,8 +87,8 @@
     d1.key = @"天天动听";
     [[iDownDataManager shared] appendData:d1];
     
-    iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ww2.sinaimg.cn/bmiddle/539062f7gw1e3689bgigjj.jpg"];
-    d2.key = @"人不可貌相";
+    iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ttplayer.qianqian.com/download/ttpsetup-95024068.exe"];
+    d2.key = @"千千静听";
     [[iDownDataManager shared] appendData:d2];
     
     iDownData *d3 = [[iDownData alloc] initWithUrl:@"http://ww4.sinaimg.cn/bmiddle/6b13f227jw1e36rdsvb15j.jpg"];

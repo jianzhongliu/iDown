@@ -21,5 +21,6 @@
 - (void) removeDataWithKey : (NSString *) key;
 - (NSUInteger) count;
 - (void) allStartDownload;
+- (void) allRestartDownload;
 
 @end

@@ -94,6 +94,10 @@
             
         case iDownStateFailed:
             break;
+        
+        case iDownStateUnknown:
+            [self restartDownload];
+            break;
             
         default:
             break;
@@ -116,6 +120,16 @@
         [_delegate stateChanged];
     }
     [_downloader pauseDownload];
+}
+
+- (void) restartDownload
+{
+    if (_delegate)
+    {
+        [_delegate stateChanged];
+    }
+    [_downloader endDownload];
+    [_downloader startDownload];
 }
 
 

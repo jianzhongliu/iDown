@@ -87,4 +87,14 @@
     }
 }
 
+- (void) allRestartDownload
+{
+    iDownData *data;
+    for (NSObject *key in keys)
+    {
+        data = [dic objectForKey:key];
+        [data handleEvent:iDownEventRestart];
+    }
+}
+
 @end

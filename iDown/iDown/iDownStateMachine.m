@@ -58,6 +58,10 @@
             }
             break;
             
+        case iDownEventRestart:
+            _state = iDownStateUnknown;
+            break;
+            
         default:
             break;
     }
