@@ -13,6 +13,7 @@
 {
     NSMutableArray *keys;
     NSMutableDictionary *dic;
+    NSString *statusFile;
 }
 
 + (iDownDataManager *) shared
@@ -37,6 +38,7 @@
     {
         keys = [[NSMutableArray alloc] init];
         dic = [[NSMutableDictionary alloc] init];
+        statusFile = @"status.plist";
     }
     
     return self;
@@ -95,6 +97,39 @@
         data = [dic objectForKey:key];
         [data handleEvent:iDownEventRestart];
     }
+}
+
+- (void) saveStatus
+{
+    NSMutableDictionary *totalData = [[NSMutableDictionary alloc] init];
+    for (NSObject *key in keys)
+    {
+        iDownData *data = [dic objectForKey:key];
+        [totalData setValue:[data exportToDictionary] forKey:data.key];
+    }
+    
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:statusFile];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:filePath])
+    {
+        [fileManager removeItemAtPath:filePath error:nil];
+        NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, filePath);
+    }
+    [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    NSLog(@"%s-File [%@] created", __FUNCTION__, filePath);
+    
+    [totalData writeToFile:filePath atomically:YES];
+    
+    NSMutableDictionary *mutableDictionary1 = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+    NSLog(@"%@", [mutableDictionary1 objectForKey:@"key"]);
+}
+
+- (void) loadStatus
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"status" ofType:@"plist"];
+    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
 }
 
 @end

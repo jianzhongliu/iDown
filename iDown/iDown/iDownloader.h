@@ -41,4 +41,7 @@
 - (void) pauseDownload;
 - (void) endDownload;
 
+- (NSDictionary *) exportToDictionary;
++ (iDownloader *) importFromDictionary : (NSDictionary *) dic;
+
 @end

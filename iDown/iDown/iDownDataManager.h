@@ -23,4 +23,7 @@
 - (void) allStartDownload;
 - (void) allRestartDownload;
 
+- (void) saveStatus;
+- (void) loadStatus;
+
 @end

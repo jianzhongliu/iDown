@@ -49,7 +49,7 @@
         packet = [[iDownloadPack alloc] init];
         packet.request = [[NSMutableURLRequest alloc] initWithURL:_url];
         [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
-              forHTTPHeaderField:@"Range"];
+              forHTTPHeaderField:@"RANGE"];
         packet.connection = [[NSURLConnection alloc] initWithRequest:packet.request
                                                             delegate:self
                                                     startImmediately:NO];
@@ -61,6 +61,9 @@
     {
         packet = [[iDownloadPack alloc] init];
         packet.request = [[NSMutableURLRequest alloc] initWithURL:_url];
+        [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
+              forHTTPHeaderField:@"RANGE"];
+        [packet.request setValue:@"" forHTTPHeaderField:@"IF-RANGE"];
         packet.connection = [[NSURLConnection alloc] initWithRequest:packet.request
                                                             delegate:self
                                                     startImmediately:NO];
@@ -94,8 +97,57 @@
 - (void) endDownload
 {
     isPaused = NO;
-    backupPacket = nil;
     [packet.connection cancel];
+    backupPacket = nil;
+    packet = nil;
+}
+
+- (NSDictionary *) exportToDictionary
+{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:_url forKey:@"url"];
+    [dic setValue:_key forKey:@"key"];
+    [dic setValue:[NSNumber numberWithDouble:currentDownloadSpeed] forKey:@"speed"];
+    
+    NSMutableDictionary *packetDic = [[NSMutableDictionary alloc] init];
+    [packetDic setValue:[NSNumber numberWithLongLong:backupPacket.currentLength] forKey:@"currentLength"];
+    [packetDic setValue:[NSNumber numberWithLongLong:backupPacket.totalLength] forKey:@"totalLength"];
+    [packetDic setValue:[NSNumber numberWithDouble:backupPacket.currentTime] forKey:@"currentTime"];
+    [packetDic setValue:[NSNumber numberWithDouble:backupPacket.startTime] forKey:@"startTime"];
+    [packetDic setValue:[NSNumber numberWithDouble:backupPacket.backupTime] forKey:@"backupTime"];
+
+    [dic setValue:packetDic forKey:@"packet"];
+    
+    return dic;
+}
+
++ (iDownloader *) importFromDictionary:(NSDictionary *)dic
+{
+    iDownloader *downloader = [[iDownloader alloc] initWithUrl:[dic valueForKey:@"url"]
+                                                        andKey:[dic valueForKey:@"key"]];
+    [downloader setSpeed: (NSNumber *)[dic objectForKey:@"speed"]];
+    
+    iDownloadPack *tempPack = [[iDownloadPack alloc] init];
+    tempPack.currentLength = [(NSNumber *)[dic valueForKey:@"currentLength"] longLongValue];
+    tempPack.totalLength = [(NSNumber *)[dic valueForKey:@"totalLength"] longLongValue];
+    tempPack.currentTime = [(NSNumber *)[dic valueForKey:@"currentTime"] doubleValue];
+    tempPack.startTime = [(NSNumber *)[dic valueForKey:@"startTime"] doubleValue];
+    tempPack.backupTime = [(NSNumber *)[dic valueForKey:@"backupTime"] doubleValue];
+
+    [downloader setBackupPacket:tempPack];
+    return downloader;
+}
+
+#pragma mark - privates for import from file
+
+- (void) setBackupPacket : (iDownloadPack *) backup
+{
+    backupPacket = backup;
+}
+
+- (void) setSpeed : (NSNumber *) speed
+{
+    currentDownloadSpeed = [speed doubleValue];
 }
 
 #pragma mark - network
@@ -146,6 +198,12 @@
     {
         NSLog(@"%s-[%@] received a %d status code", __FUNCTION__,
               _key, _res.statusCode);
+        if (_res.statusCode == 206)
+        {
+            NSLog(@"%s-[%@] received a continuous download response, with content-length = [%@]",
+                  __FUNCTION__, _key,
+                  [[_res allHeaderFields] valueForKey:@"Content-Range"]);
+        }
     }
     
     packet.totalLength = [response expectedContentLength];

@@ -87,7 +87,31 @@
     [self handleNextState];
 }
 
+- (NSDictionary *) exportToDictionary
+{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:_key forKey:@"key"];
+    [dic setValue:_urlString forKey:@"url"];
+    [dic setValue:[_downloader exportToDictionary] forKey:@"downloader"];
+    
+    return dic;
+}
+
++ (iDownData *) importFromDictionary : (NSDictionary *) dic
+{
+    iDownData *temp = [[iDownData alloc] initWithUrl:[dic objectForKey:@"url"]];
+    temp.key = [dic objectForKey:@"key"];
+    [temp importDownloaderFromDic:(NSDictionary *) [dic objectForKey:@"downloader"]];
+    
+    return temp;
+}
+
 #pragma mark - privates
+
+- (void) importDownloaderFromDic : (NSDictionary *) dic
+{
+    _downloader = [iDownloader importFromDictionary:dic];
+}
 
 - (void) handleNextState
 {

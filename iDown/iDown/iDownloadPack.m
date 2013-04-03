@@ -9,9 +9,6 @@
 #import "iDownloadPack.h"
 
 @implementation iDownloadPack
-{
-    NSTimeInterval backupTime;
-}
 
 @synthesize request = _request;
 @synthesize connection = _connection;
@@ -21,13 +18,13 @@
 @synthesize totalLength = _totalLength;
 @synthesize currentLength = _currentLength;
 @synthesize minSizeKBForStore = _minSizeKBForStore;
+@synthesize backupTime = _backupTime;
 
 - (id) init
 {
     self = [super init];
     if (self)
     {
-        backupTime = 0;
         _minSizeKBForStore = 500;
     }
     return self;
@@ -35,7 +32,7 @@
 
 - (double) downloadTime
 {
-    return (double) (_currentTime - _startTime + backupTime);
+    return (double) (_currentTime - _startTime + _backupTime);
 }
 
 - (double) downloadSpeed
@@ -87,7 +84,7 @@
     if (newPack.totalLength + self.currentLength == self.totalLength)
     {
         self.currentLength += newPack.currentLength;
-        backupTime = self.downloadTime;
+        _backupTime = self.downloadTime;
         _currentTime = newPack.currentTime;
         _startTime = newPack.startTime;
         [_data appendData:newPack.data];

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableData *data;
 @property (nonatomic, unsafe_unretained) NSTimeInterval startTime;
 @property (nonatomic, unsafe_unretained) NSTimeInterval currentTime;
+@property (nonatomic, unsafe_unretained) NSTimeInterval backupTime;
 @property (nonatomic, unsafe_unretained) long long totalLength;
 @property (nonatomic, unsafe_unretained) long long currentLength;
 @property (nonatomic, unsafe_unretained) double minSizeKBForStore;
