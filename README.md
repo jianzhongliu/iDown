@@ -21,3 +21,7 @@ Finish simple download module, start deal with continuous downloading feature.
 2013.4.2
 Finish continuous downloading feature.
 Correct the wrong time table in document.
+
+2013.4.3
+Fix a bug which caused wrong behavior when restart after failed.
+

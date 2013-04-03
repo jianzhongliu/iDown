@@ -94,6 +94,7 @@
 - (void) endDownload
 {
     isPaused = NO;
+    backupPacket = nil;
     [packet.connection cancel];
 }
 
@@ -151,6 +152,28 @@
     packet.currentLength = 0;
     packet.startTime = [NSDate timeIntervalSinceReferenceDate];
     packet.data = [[NSMutableData alloc] init];
+    
+    if (![packet checkValidWithBackup:backupPacket])
+    {
+        NSLog(@"%s-[%@] continuous download resume with a [%lld] length, check backup downloaded length [%lld] + resume total expected length [%lld] != backup total length [%lld], server may not support continuous download. Halt current downloading.",
+              __FUNCTION__,
+              _key,
+              packet.totalLength,
+              backupPacket.currentLength,
+              packet.totalLength,
+              backupPacket.totalLength);
+        
+        if (_delegate)
+        {
+            [_delegate didFailedDownloadFile];
+        }
+        if (_storageDelegate)
+        {
+            [_storageDelegate reportComplete];
+        }
+        
+        return;
+    }
     
     if (_delegate)
     {

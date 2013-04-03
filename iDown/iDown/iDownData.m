@@ -104,6 +104,7 @@
             break;
             
         case iDownStateFailed:
+            [self endDownload];
             break;
         
         case iDownStateUnknown:
@@ -143,19 +144,24 @@
     [_downloader startDownload];
 }
 
+- (void) endDownload
+{
+    [_downloader endDownload];
+}
+
 #pragma mark - data storage
 
 - (void) reportData:(NSData *)data
 {
     if (!data)
         return;
-        
+    
+    NSLog(@"%s-[%@] write from [%lld] for [%d] length",
+          __FUNCTION__, _filePath, _storedLength, [data length]);
+    
     _storedLength += [data length];
     [_fileHandle seekToEndOfFile];
     [_fileHandle writeData:data];
-    
-    NSLog(@"%s-[%@] write from [%lld] for [%d] length",
-        __FUNCTION__, _filePath, _storedLength, [data length]);
 }
 
 - (void) reportFileName:(NSString *)name
@@ -190,6 +196,7 @@
 - (void) reportComplete
 {
     [_fileHandle closeFile];
+    _fileCreated = NO;
     
     NSFileManager * filemanager = [[NSFileManager alloc]init];
     if([filemanager fileExistsAtPath: _filePath])

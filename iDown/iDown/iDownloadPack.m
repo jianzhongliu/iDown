@@ -127,4 +127,12 @@
     return nil;
 }
 
+- (bool) checkValidWithBackup : (iDownloadPack *) backupPack
+{
+    if (backupPack)
+        return (backupPack.totalLength == _totalLength + backupPack.currentLength);
+    else
+        return YES;
+}
+
 @end

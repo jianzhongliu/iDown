@@ -32,5 +32,6 @@
 - (NSData *) buffToWriteWithBackup : (iDownloadPack *) backupPack isComplete : (bool) complete;
 
 - (bool) appendProgressWithPack : (iDownloadPack *) newPack;
+- (bool) checkValidWithBackup : (iDownloadPack *) backupPack;
 
 @end
