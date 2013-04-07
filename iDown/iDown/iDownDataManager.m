@@ -8,6 +8,7 @@
 
 #import "iDownDataManager.h"
 #import "iDownManager.h"
+#import "NSDictionary+Helper.h"
 
 @implementation iDownDataManager
 {
@@ -36,12 +37,17 @@
     self = [super init];
     if (self)
     {
-        keys = [[NSMutableArray alloc] init];
-        dic = [[NSMutableDictionary alloc] init];
-        statusFile = @"status.plist";
+        [self reset];
+        statusFile = @"status";
     }
     
     return self;
+}
+
+- (void) reset
+{
+    keys = [[NSMutableArray alloc] init];
+    dic = [[NSMutableDictionary alloc] init];
 }
 
 - (NSUInteger) indexOfKey:(NSString *)key
@@ -117,19 +123,42 @@
         [fileManager removeItemAtPath:filePath error:nil];
         NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, filePath);
     }
-    [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    [fileManager createFileAtPath:filePath contents:nil attributes:totalData];
     NSLog(@"%s-File [%@] created", __FUNCTION__, filePath);
     
-    [totalData writeToFile:filePath atomically:YES];
-    
-    NSMutableDictionary *mutableDictionary1 = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-    NSLog(@"%@", [mutableDictionary1 objectForKey:@"key"]);
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+    [fileHandle writeData:[totalData toData]];
+    [fileHandle closeFile];
 }
 
 - (void) loadStatus
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"status" ofType:@"plist"];
-    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:statusFile];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath])
+    {
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+        NSData *dataFromFile = [fileHandle readDataToEndOfFile];
+        NSDictionary *status = [NSDictionary dictionaryWithContentsOfData:dataFromFile];
+        [fileHandle closeFile];
+        NSLog(@"%s-File [%@] read the data:\n%@", __FUNCTION__, filePath, status);
+        
+        [self reset];
+        for (NSObject *key in [status keyEnumerator])
+        {
+            NSString *keyString = (NSString *) key;
+            [keys addObject:keyString];
+            [dic setObject:[iDownData importFromDictionary:[status objectForKey:keyString]] forKey:keyString];
+        }
+        NSLog(@"%s-status loaded", __FUNCTION__);
+    }
+}
+
+- (void) clearStatus
+{
+    
 }
 
 @end

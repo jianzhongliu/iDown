@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		637404AC1709A4510010C17E /* iDownloadPack.m in Sources */ = {isa = PBXBuildFile; fileRef = 637404AB1709A4510010C17E /* iDownloadPack.m */; };
 		63A27F071705714300F8E24C /* iDownDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A27F061705714300F8E24C /* iDownDataManager.m */; };
+		63A4DB241711235E002A192A /* NSDictionary+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A4DB231711235E002A192A /* NSDictionary+Helper.m */; };
 		63AE18951703E6BD00DD22AA /* iDownItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18941703E6BD00DD22AA /* iDownItem.m */; };
 		63AE18981703E7A200DD22AA /* UIImage+iDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AE18971703E7A200DD22AA /* UIImage+iDown.m */; };
 		63AE189D1703E9F600DD22AA /* downloading.png in Resources */ = {isa = PBXBuildFile; fileRef = 63AE189A1703E9F600DD22AA /* downloading.png */; };
@@ -53,6 +54,8 @@
 		637404AB1709A4510010C17E /* iDownloadPack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownloadPack.m; sourceTree = "<group>"; };
 		63A27F051705714300F8E24C /* iDownDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownDataManager.h; sourceTree = "<group>"; };
 		63A27F061705714300F8E24C /* iDownDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownDataManager.m; sourceTree = "<group>"; };
+		63A4DB221711235E002A192A /* NSDictionary+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Helper.h"; sourceTree = "<group>"; };
+		63A4DB231711235E002A192A /* NSDictionary+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Helper.m"; sourceTree = "<group>"; };
 		63AE18931703E6BD00DD22AA /* iDownItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownItem.h; sourceTree = "<group>"; };
 		63AE18941703E6BD00DD22AA /* iDownItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownItem.m; sourceTree = "<group>"; };
 		63AE18961703E7A200DD22AA /* UIImage+iDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+iDown.h"; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 				63B3A1A1170312F30005495C /* UIColor+iDown.m */,
 				63AE18961703E7A200DD22AA /* UIImage+iDown.h */,
 				63AE18971703E7A200DD22AA /* UIImage+iDown.m */,
+				63A4DB221711235E002A192A /* NSDictionary+Helper.h */,
+				63A4DB231711235E002A192A /* NSDictionary+Helper.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				63AE18B6170462FC00DD22AA /* iDownManager.m in Sources */,
 				63A27F071705714300F8E24C /* iDownDataManager.m in Sources */,
 				637404AC1709A4510010C17E /* iDownloadPack.m in Sources */,
+				63A4DB241711235E002A192A /* NSDictionary+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
