@@ -30,6 +30,7 @@
 - (void) setDownloadEventHandler : (id<iDownloaderEvent>) delegate;
 
 - (void) handleEvent : (iDownEvent) event;
+- (void) idle;
 - (NSDictionary *) exportToDictionary;
 + (iDownData *) importFromDictionary : (NSDictionary *) dic;
 

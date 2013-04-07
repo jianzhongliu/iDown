@@ -8,9 +8,11 @@
 
 #import "iDownAppDelegate.h"
 #import "iDownViewController.h"
-#import "iDownDataManager.h"
 
 @implementation iDownAppDelegate
+{
+    iDownViewController *iDown;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -18,7 +20,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    iDownViewController *iDown = [[iDownViewController alloc] initWithNibName:nil bundle:nil];
+    iDown = [[iDownViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iDown];
     [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];
@@ -33,7 +35,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [[iDownDataManager shared] saveStatus];
+    [iDown saveStatus];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -43,12 +45,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[iDownDataManager shared] loadStatus];
+    [iDown loadStatus];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [[iDownDataManager shared] saveStatus];
+    [iDown saveStatus];
 }
 
 @end

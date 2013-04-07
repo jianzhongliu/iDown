@@ -10,4 +10,7 @@
 
 @interface iDownViewController : UIViewController
 
+- (void) saveStatus;
+- (void) loadStatus;
+
 @end

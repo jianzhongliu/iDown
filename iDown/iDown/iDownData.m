@@ -19,6 +19,7 @@
     NSFileHandle *_fileHandle;
     NSString *_filePath;
     bool _fileCreated;
+    iDownState oldState;
     
     unsigned long long _storedLength;
 }
@@ -61,6 +62,7 @@
         _downloader = [[iDownManager shared] addDownloadTaskWithUrlString:_urlString andKey:_key];
         _downloader.storageDelegate = self;
         _state = [[iDownStateMachine alloc] initWithState:iDownStateUnknown];
+        oldState = iDownStateUnknown;
     }
 
     return self;
@@ -92,6 +94,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:_key forKey:@"key"];
     [dic setValue:_urlString forKey:@"url"];
+    [dic setValue:[NSNumber numberWithInt:(int)_state.state] forKey:@"state"];
     [dic setValue:[_downloader exportToDictionary] forKey:@"downloader"];
     
     return dic;
@@ -101,8 +104,10 @@
 {
     iDownData *temp = [[iDownData alloc] initWithUrl:[dic objectForKey:@"url"]];
     temp.key = [dic objectForKey:@"key"];
+    temp.state = [[iDownStateMachine alloc] initWithState:[[dic objectForKey:@"state"] intValue]];
     [temp importDownloaderFromDic:(NSDictionary *) [dic objectForKey:@"downloader"]];
     
+    NSLog(@"%s-[%@] imported from status file:\n%@", __FUNCTION__, temp.key, dic);
     return temp;
 }
 
@@ -115,6 +120,10 @@
 
 - (void) handleNextState
 {
+    if (_state.state == oldState)
+        return;
+    
+    oldState = _state.state;
     switch (_state.state) {
         case iDownStateDownloading:
             [self startDownload];
@@ -140,30 +149,31 @@
     }
 }
 
-- (void) startDownload
+- (void) idle
 {
     if (_delegate)
     {
         [_delegate stateChanged];
     }
+    
+    [_downloader idle];
+}
+
+- (void) startDownload
+{
+    [self idle];
     [_downloader startDownload];
 }
 
 - (void) pauseDownload
 {
-    if (_delegate)
-    {
-        [_delegate stateChanged];
-    }
+    [self idle];
     [_downloader pauseDownload];
 }
 
 - (void) restartDownload
 {
-    if (_delegate)
-    {
-        [_delegate stateChanged];
-    }
+    [self idle];
     [_downloader endDownload];
     [_downloader startDownload];
 }
@@ -202,7 +212,7 @@
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         
-        if (![fileManager fileExistsAtPath:filePath])
+        if ([fileManager fileExistsAtPath:filePath])
         {
             [fileManager removeItemAtPath:filePath error:nil];
             NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, filePath);

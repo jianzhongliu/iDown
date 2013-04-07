@@ -105,12 +105,23 @@
     }
 }
 
+- (void) idle
+{
+    iDownData *data;
+    for (NSObject *key in keys)
+    {
+        data = [dic objectForKey:key];
+        [data idle];
+    }
+}
+
 - (void) saveStatus
 {
     NSMutableDictionary *totalData = [[NSMutableDictionary alloc] init];
     for (NSObject *key in keys)
     {
         iDownData *data = [dic objectForKey:key];
+        [data handleEvent:iDownEventAppDidEnterBackground];
         [totalData setValue:[data exportToDictionary] forKey:data.key];
     }
     
@@ -118,7 +129,7 @@
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
     NSString *filePath = [documentDirectory stringByAppendingPathComponent:statusFile];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:filePath])
+    if ([fileManager fileExistsAtPath:filePath])
     {
         [fileManager removeItemAtPath:filePath error:nil];
         NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, filePath);
@@ -143,14 +154,14 @@
         NSData *dataFromFile = [fileHandle readDataToEndOfFile];
         NSDictionary *status = [NSDictionary dictionaryWithContentsOfData:dataFromFile];
         [fileHandle closeFile];
-        NSLog(@"%s-File [%@] read the data:\n%@", __FUNCTION__, filePath, status);
         
         [self reset];
         for (NSObject *key in [status keyEnumerator])
         {
             NSString *keyString = (NSString *) key;
+            iDownData *downData = [iDownData importFromDictionary:[status objectForKey:keyString]];
             [keys addObject:keyString];
-            [dic setObject:[iDownData importFromDictionary:[status objectForKey:keyString]] forKey:keyString];
+            [dic setObject:downData forKey:keyString];
         }
         NSLog(@"%s-status loaded", __FUNCTION__);
     }

@@ -102,12 +102,24 @@
     packet = nil;
 }
 
+- (void) idle
+{
+    if (_delegate)
+    {
+        [_delegate didGetDownloadExpectSize:[backupPacket totalSizeKBWithBackup:nil]];
+        [_delegate didFinishDownloadDataSize:[backupPacket currentSizeKBWithBackup:nil]];
+        [_delegate didChangeDownloadSpeedTo:[backupPacket speedKBPSWithBackup:nil] withKey:_key];
+        [_delegate didChangeDownloadProgress:[backupPacket progressWithBackup:nil] withKey:_key];
+    }
+}
+
 - (NSDictionary *) exportToDictionary
 {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:_url forKey:@"url"];
     [dic setValue:_key forKey:@"key"];
     [dic setValue:[NSNumber numberWithDouble:currentDownloadSpeed] forKey:@"speed"];
+    [dic setValue:[NSNumber numberWithBool:isPaused] forKey:@"isPaused"];
     
     NSMutableDictionary *packetDic = [[NSMutableDictionary alloc] init];
     [packetDic setValue:[NSNumber numberWithLongLong:backupPacket.currentLength] forKey:@"currentLength"];
@@ -126,19 +138,26 @@
     iDownloader *downloader = [[iDownloader alloc] initWithUrl:[dic valueForKey:@"url"]
                                                         andKey:[dic valueForKey:@"key"]];
     [downloader setSpeed: (NSNumber *)[dic objectForKey:@"speed"]];
+    [downloader setIsPuased: [(NSNumber *)[dic objectForKey:@"isPaused"] boolValue]];
     
     iDownloadPack *tempPack = [[iDownloadPack alloc] init];
-    tempPack.currentLength = [(NSNumber *)[dic valueForKey:@"currentLength"] longLongValue];
-    tempPack.totalLength = [(NSNumber *)[dic valueForKey:@"totalLength"] longLongValue];
-    tempPack.currentTime = [(NSNumber *)[dic valueForKey:@"currentTime"] doubleValue];
-    tempPack.startTime = [(NSNumber *)[dic valueForKey:@"startTime"] doubleValue];
-    tempPack.backupTime = [(NSNumber *)[dic valueForKey:@"backupTime"] doubleValue];
+    NSDictionary *packDic = [dic objectForKey:@"packet"];
+    tempPack.currentLength = [(NSNumber *)[packDic valueForKey:@"currentLength"] longLongValue];
+    tempPack.totalLength = [(NSNumber *)[packDic valueForKey:@"totalLength"] longLongValue];
+    tempPack.currentTime = [(NSNumber *)[packDic valueForKey:@"currentTime"] doubleValue];
+    tempPack.startTime = [(NSNumber *)[packDic valueForKey:@"startTime"] doubleValue];
+    tempPack.backupTime = [(NSNumber *)[packDic valueForKey:@"backupTime"] doubleValue];
 
     [downloader setBackupPacket:tempPack];
     return downloader;
 }
 
 #pragma mark - privates for import from file
+
+- (void) setIsPuased : (bool) paused
+{
+    isPaused = paused;
+}
 
 - (void) setBackupPacket : (iDownloadPack *) backup
 {

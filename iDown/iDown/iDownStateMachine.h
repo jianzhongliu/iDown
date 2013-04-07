@@ -12,6 +12,8 @@ typedef enum
 {
     iDownEventUserTappedItem,
     iDownEventUserTappedAllStartButton,
+    iDownEventAppDidEnterBackground,
+    iDownEventAppDidResumeActive,
     iDownEventFinishedDownload,
     iDownEventFailedDownload,
     iDownEventRestart,

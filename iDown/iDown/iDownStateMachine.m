@@ -62,6 +62,16 @@
             _state = iDownStateUnknown;
             break;
             
+        case iDownEventAppDidEnterBackground:
+            if (_state == iDownStateDownloading)
+            {
+                _state = iDownStatePaused;
+            }
+            break;
+        
+        case iDownEventAppDidResumeActive:
+            break;
+            
         default:
             break;
     }

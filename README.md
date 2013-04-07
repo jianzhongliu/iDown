@@ -25,3 +25,5 @@ Correct the wrong time table in document.
 2013.4.3
 Fix a bug which caused wrong behavior when restart after failed.
 
+2013.4.7
+Finish status retain and recovery. There is a bug that causes delegate instances of tableview lost

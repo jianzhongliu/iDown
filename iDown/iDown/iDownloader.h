@@ -40,6 +40,7 @@
 - (void) startDownload;
 - (void) pauseDownload;
 - (void) endDownload;
+- (void) idle;
 
 - (NSDictionary *) exportToDictionary;
 + (iDownloader *) importFromDictionary : (NSDictionary *) dic;

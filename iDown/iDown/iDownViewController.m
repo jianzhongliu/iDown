@@ -81,6 +81,18 @@
     [self buildTestData];
 }
 
+- (void) saveStatus
+{
+    [[iDownDataManager shared] saveStatus];
+}
+
+- (void) loadStatus
+{
+    [[iDownDataManager shared] loadStatus];
+    [downloadTable reloadData];
+    [[iDownDataManager shared] idle];
+}
+
 - (void) buildTestData
 {
     iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://www.dongting.com/files/ttpod-setup.exe"];

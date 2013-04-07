@@ -25,5 +25,6 @@
 
 - (void) saveStatus;
 - (void) loadStatus;
+- (void) idle;
 
 @end
