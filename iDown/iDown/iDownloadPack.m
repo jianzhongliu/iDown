@@ -30,6 +30,18 @@
     return self;
 }
 
+- (NSString *) description
+{
+    return [NSString stringWithFormat:@"request = %@\nconnection = %@\ndata = [%d]\nstartTime = %.2f\ncurrentTime = %.2f\ncurrentLength = %.2f\ntotalLength = %.2f",
+            [_request description],
+            [_connection description],
+            [_data length],
+            _startTime,
+            _currentTime,
+            [self currentSizeKBWithBackup:nil],
+            [self totalSizeKBWithBackup:nil]];
+}
+
 - (double) downloadTime
 {
     return (double) (_currentTime - _startTime + _backupTime);
@@ -42,6 +54,9 @@
 
 - (double) progress
 {
+    if (_totalLength == 0)
+        return 0.0f;
+    
     return (double) _currentLength / (double) _totalLength;
 }
 
@@ -76,7 +91,11 @@
 
 - (double) progressWithBackup:(iDownloadPack *)backupPack
 {
-    return [self currentSizeKBWithBackup:backupPack] / [self totalSizeKBWithBackup:backupPack];
+    double totalSizeKB = [self totalSizeKBWithBackup:backupPack];
+    if (totalSizeKB == 0)
+        return 0.0f;
+    
+    return [self currentSizeKBWithBackup:backupPack] / totalSizeKB;
 }
 
 - (bool) appendProgressWithPack:(iDownloadPack *)newPack

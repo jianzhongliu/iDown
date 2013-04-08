@@ -11,7 +11,7 @@
 
 @protocol iDownloaderEvent <NSObject>
 
-- (void) didFinishDownloadData : (NSData *) data withKey : (NSString *) key;
+- (void) didFinishDownload;
 - (void) didFinishDownloadDataSize : (double) sizeKB;
 - (void) didChangeDownloadProgress : (float) progress withKey : (NSString *) key;
 - (void) didChangeDownloadSpeedTo : (float) speed withKey : (NSString *) key;
@@ -40,6 +40,7 @@
 - (void) startDownload;
 - (void) pauseDownload;
 - (void) endDownload;
+- (void) succeedDownload;
 - (void) idle;
 
 - (NSDictionary *) exportToDictionary;

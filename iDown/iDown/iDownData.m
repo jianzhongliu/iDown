@@ -42,8 +42,10 @@
     if (self)
     {
         _urlString = urlString;
-        _key = NULL;
+        _key = nil;
         _fileCreated = NO;
+        _filePath = nil;
+        _fileHandle = nil;
         
         for (int i = [_urlString length]; i > 0; -- i)
         {
@@ -86,6 +88,8 @@
 - (void) handleEvent:(iDownEvent)event
 {
     [_state nextStateWithEvent:event];
+    NSLog(@"%s-[%@] received [%d] event, state changes to [%d]",
+          __FUNCTION__, _key, event, _state.state);
     [self handleNextState];
 }
 
@@ -94,6 +98,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:_key forKey:@"key"];
     [dic setValue:_urlString forKey:@"url"];
+    [dic setValue:[NSNumber numberWithUnsignedLongLong:_storedLength] forKey:@"storedLength"];
     [dic setValue:[NSNumber numberWithInt:(int)_state.state] forKey:@"state"];
     [dic setValue:[_downloader exportToDictionary] forKey:@"downloader"];
     
@@ -105,9 +110,9 @@
     iDownData *temp = [[iDownData alloc] initWithUrl:[dic objectForKey:@"url"]];
     temp.key = [dic objectForKey:@"key"];
     temp.state = [[iDownStateMachine alloc] initWithState:[[dic objectForKey:@"state"] intValue]];
-    [temp importDownloaderFromDic:(NSDictionary *) [dic objectForKey:@"downloader"]];
+    [temp importDownloaderFromDic: dic];
     
-    NSLog(@"%s-[%@] imported from status file:\n%@", __FUNCTION__, temp.key, dic);
+//    NSLog(@"%s-[%@] imported from status file:\n%@", __FUNCTION__, temp.key, dic);
     return temp;
 }
 
@@ -115,7 +120,9 @@
 
 - (void) importDownloaderFromDic : (NSDictionary *) dic
 {
-    _downloader = [iDownloader importFromDictionary:dic];
+    _storedLength = [(NSNumber *)[dic objectForKey:@"storedLength"] unsignedLongLongValue];
+    _downloader = [iDownloader importFromDictionary:(NSDictionary *) [dic objectForKey:@"downloader"]];
+    _downloader.storageDelegate = self;
 }
 
 - (void) handleNextState
@@ -134,6 +141,7 @@
             break;
             
         case iDownStateSucceed:
+            [self succeedDownload];
             break;
             
         case iDownStateFailed:
@@ -181,6 +189,15 @@
 - (void) endDownload
 {
     [_downloader endDownload];
+    _storedLength = 0;
+    _filePath = nil;
+    _fileCreated = NO;
+    _fileHandle = nil;
+}
+
+- (void) succeedDownload
+{
+    [_downloader succeedDownload];
 }
 
 #pragma mark - data storage
@@ -203,27 +220,32 @@
     NSString *fileName = name;
     if (!fileName)
         fileName = _key;
+    _filePath = [self getFilePathWithName:fileName];
     
-    if (!_fileCreated)
+    if ([self checkFileValid])//file exists and valid to stored length
     {
-        NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentDirectory = [directoryPaths objectAtIndex:0];
-        NSString *filePath = [documentDirectory stringByAppendingPathComponent:fileName];
-        
+        _fileCreated = YES;
+        _fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:_filePath];
+    }
+    else if (!_fileCreated)//file not exists
+    {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         
-        if ([fileManager fileExistsAtPath:filePath])
+        if ([fileManager fileExistsAtPath:_filePath])
         {
-            [fileManager removeItemAtPath:filePath error:nil];
-            NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, filePath);
+            [fileManager removeItemAtPath:_filePath error:nil];
+            NSLog(@"%s-File [%@] exists, delete it", __FUNCTION__, _filePath);
         }        
-        [fileManager createFileAtPath:filePath contents:nil attributes:nil];
-        NSLog(@"%s-File [%@] created", __FUNCTION__, filePath);
+        [fileManager createFileAtPath:_filePath contents:nil attributes:nil];
+        NSLog(@"%s-File [%@] created", __FUNCTION__, _filePath);
 
         _fileCreated = YES;
-        _fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
-        _filePath = filePath;
+        _fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:_filePath];
         _storedLength = 0;
+    }
+    else//file exists but not valid
+    {
+        [self handleEvent:iDownEventFileCheckInvalid];
     }
 }
 
@@ -232,13 +254,41 @@
     [_fileHandle closeFile];
     _fileCreated = NO;
     
-    NSFileManager * filemanager = [[NSFileManager alloc]init];
+    NSFileManager * filemanager = [[NSFileManager alloc] init];
     if([filemanager fileExistsAtPath: _filePath])
     {
         NSDictionary * attributes = [filemanager attributesOfItemAtPath:_filePath error:nil];
         NSNumber *theFileSize = [attributes objectForKey:NSFileSize];
         NSLog(@"%s-checkfile [%@], [%.2fk]", __FUNCTION__, _filePath, (double) [theFileSize intValue]);
+        
+        [self handleEvent:iDownEventFinishedDownload];
     }
+}
+
+- (bool) checkFileValid
+{    
+    NSFileManager * filemanager = [[NSFileManager alloc] init];
+    NSDictionary * attributes = [filemanager attributesOfItemAtPath:_filePath error:nil];
+    if (!attributes)
+        return NO;
+    
+    NSNumber *theFileSize = [attributes objectForKey:NSFileSize];
+    
+    if ([theFileSize unsignedLongLongValue] != _storedLength)
+    {
+        NSLog(@"%s-[%@] is checked invalid, file size = [%lld] but storedLength = [%lld]",
+              __FUNCTION__, _filePath, [theFileSize unsignedLongLongValue], _storedLength);
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (NSString *) getFilePathWithName : (NSString *) name
+{
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    return [documentDirectory stringByAppendingPathComponent:name];
 }
 
 @end

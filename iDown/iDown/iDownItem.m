@@ -85,25 +85,30 @@
         case iDownStateDownloading:
             stateIcon.image = [UIImage iDownIconDownloading];
             stateLabel.text = @"下载中...";
+            NSLog(@"%s-[%@] switch to state [downloading]", __FUNCTION__, _data.key);
             break;
             
         case iDownStateFailed:
             stateIcon.image = [UIImage iDownIconFailed];
             stateLabel.text = @"下载失败";
+            NSLog(@"%s-[%@] switch to state [failed]", __FUNCTION__, _data.key);
             break;
             
         case iDownStatePaused:
             stateIcon.image = [UIImage iDownIconPaused];
             stateLabel.text = @"已暂停";
+            NSLog(@"%s-[%@] switch to state [paused]", __FUNCTION__, _data.key);
             break;
             
         case iDownStateSucceed:
             stateIcon.image = [UIImage iDownIconDownloading];
             stateLabel.text = @"下载完成";
+            NSLog(@"%s-[%@] switch to state [complete]", __FUNCTION__, _data.key);
             break;
             
         default:
             stateLabel.text = @"未开始";
+            NSLog(@"%s-[%@] switch to state [unknown]", __FUNCTION__, _data.key);
             break;
     }
 }
@@ -119,7 +124,8 @@
     _data.delegate = self;
     [_data setDownloadEventHandler:self];
     [nameLabel setText:_data.key];
-    [sizeLabel setText:[NSString stringWithFormat:@"0/0"]];
+    
+    [data idle];
 }
 
 #pragma mark - iDownData
@@ -147,10 +153,9 @@
     [speedLabel setText:[NSString stringWithFormat:@"%@/s", [self stringFromSize:speed]]];
 }
 
-- (void) didFinishDownloadData:(NSData *)data withKey:(NSString *)key
+- (void) didFinishDownload
 {
     [self switchToState:iDownStateSucceed];
-    [_data handleEvent:iDownEventFinishedDownload];
 }
 
 - (void) didFinishDownloadDataSize : (double) sizeKB
@@ -162,7 +167,6 @@
 {
     _data.size = sizeKB;
     [sizeLabel setText:[NSString stringWithFormat:@"0/%@", [self stringFromSize:_data.size]]];
-    [self switchToState:iDownStateDownloading];
 }
 
 - (void) didPausedDownload

@@ -72,6 +72,10 @@
         case iDownEventAppDidResumeActive:
             break;
             
+        case iDownEventFileCheckInvalid:
+            _state = iDownStateFailed;
+            break;
+            
         default:
             break;
     }

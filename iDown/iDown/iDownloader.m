@@ -78,18 +78,26 @@
 
 - (void) pauseDownload
 {
+    isPaused = YES;
+    [packet.connection cancel];
+    
     if (backupPacket)
         [backupPacket appendProgressWithPack:packet];
     else
         backupPacket = packet;
-    
-    isPaused = YES;
-    
-    [packet.connection cancel];
+
     if (_delegate)
     {
         [_delegate didPausedDownload];
     }
+    
+    if (_storageDelegate)
+    {
+        [_storageDelegate reportData:[backupPacket buffToWriteWithBackup:nil isComplete:YES]];
+        [_storageDelegate reportComplete];
+    }
+    
+    packet = nil;
     NSLog(@"%s-[%@] is canceled, current progress [%.2fk/%.2fk] with [%.2fs], speed [%.2fk/s]", __FUNCTION__,
           _key, [backupPacket currentSizeKBWithBackup:NULL], [backupPacket totalSizeKBWithBackup:NULL], backupPacket.downloadTime, [backupPacket speedKBPSWithBackup:NULL]);
 }
@@ -102,14 +110,34 @@
     packet = nil;
 }
 
+- (void) succeedDownload
+{
+    isPaused = NO;
+    [packet.connection cancel];
+    backupPacket = packet;
+    packet = nil;
+}
+
 - (void) idle
 {
     if (_delegate)
     {
-        [_delegate didGetDownloadExpectSize:[backupPacket totalSizeKBWithBackup:nil]];
-        [_delegate didFinishDownloadDataSize:[backupPacket currentSizeKBWithBackup:nil]];
-        [_delegate didChangeDownloadSpeedTo:[backupPacket speedKBPSWithBackup:nil] withKey:_key];
-        [_delegate didChangeDownloadProgress:[backupPacket progressWithBackup:nil] withKey:_key];
+        if (packet)
+        {
+            [_delegate didGetDownloadExpectSize:[packet totalSizeKBWithBackup:backupPacket]];
+            [_delegate didFinishDownloadDataSize:[packet currentSizeKBWithBackup:backupPacket]];
+            [_delegate didChangeDownloadSpeedTo:[packet speedKBPSWithBackup:backupPacket] withKey:_key];
+            [_delegate didChangeDownloadProgress:[packet progressWithBackup:backupPacket] withKey:_key];
+        }
+        else
+        {
+            [_delegate didGetDownloadExpectSize:[backupPacket totalSizeKBWithBackup:nil]];
+            [_delegate didFinishDownloadDataSize:[backupPacket currentSizeKBWithBackup:nil]];
+            [_delegate didChangeDownloadSpeedTo:[backupPacket speedKBPSWithBackup:nil] withKey:_key];
+            [_delegate didChangeDownloadProgress:[backupPacket progressWithBackup:nil] withKey:_key];
+
+        }
+        
     }
 }
 
@@ -273,7 +301,7 @@
     {
         [_delegate didFinishDownloadDataSize: [packet currentSizeKBWithBackup:backupPacket]];
         [_delegate didChangeDownloadProgress: [packet progressWithBackup:backupPacket] withKey:_key];
-        [_delegate didFinishDownloadData: packet.data withKey:_key];//to be detail discussed
+        [_delegate didFinishDownload];
         NSLog(@"%s-[%@] finished download, size [%.2fk], cost time [%.2fs], average speed [%.2fk/s]",
               __FUNCTION__, _key, [packet currentSizeKBWithBackup:backupPacket], [packet timeWithBackup:backupPacket], [packet speedKBPSWithBackup:backupPacket]);
     }

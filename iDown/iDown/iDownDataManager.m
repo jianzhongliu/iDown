@@ -165,11 +165,29 @@
         }
         NSLog(@"%s-status loaded", __FUNCTION__);
     }
+    else//for test
+    {
+        NSLog(@"%s-First time, build test data", __FUNCTION__);
+        [self buildTestData];
+    }
 }
 
 - (void) clearStatus
 {
     
+}
+
+- (void) buildTestData
+{
+    iDownData *d1 = [[iDownData alloc] initWithUrl:@"http://www.dongting.com/files/ttpod-setup.exe"];
+    [[iDownDataManager shared] appendItem:d1];
+    
+    iDownData *d2 = [[iDownData alloc] initWithUrl:@"http://ttplayer.qianqian.com/download/ttpsetup-95024068.exe"];
+    [[iDownDataManager shared] appendItem:d2];
+    
+    iDownData *d3 = [[iDownData alloc] initWithUrl:@"http://ww4.sinaimg.cn/bmiddle/6b13f227jw1e36rdsvb15j.jpg"];
+    d3.key = @"名字";
+    [[iDownDataManager shared] appendItem:d3];
 }
 
 @end
