@@ -23,6 +23,24 @@
     return self;
 }
 
+- (NSString *) description
+{
+    switch (_state) {
+        case iDownStateFailed:
+            return @"iDownStateFailed";
+        case iDownStateDownloading:
+            return @"iDownStateDownloading";
+        case iDownStatePaused:
+            return @"iDownStatePaused";
+        case iDownStateSucceed:
+            return @"iDownStateSucceed";
+        case iDownStateUnknown:
+            return @"iDownStateUnknown";
+        default:
+            break;
+    }
+}
+
 - (iDownState) nextStateWithEvent:(iDownEvent)event
 {
     switch (event) {

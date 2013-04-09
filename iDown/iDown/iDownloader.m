@@ -42,6 +42,16 @@
     return self;
 }
 
+- (NSString *) description
+{
+    return [NSString stringWithFormat:@"url = %@\nisPaused = %d\ncurrentSpeed = %.2f\npacket = {\n%@\n}\nbackup = {\n%@\n}",
+            _url,
+            isPaused,
+            currentDownloadSpeed,
+            packet,
+            backupPacket];
+}
+
 - (void) startDownload
 {
     if (isPaused)
@@ -227,9 +237,9 @@
             [_delegate didChangeDownloadSpeedTo:_speed withKey:_key];
             currentDownloadSpeed = _speed;
         }
-        NSLog(@"%s-[%@] received data [%.2fk], current speed [%.2fk/s], current size [%.2fk/%.2fk]",
-              __FUNCTION__, _key, (double) [data length] / 1024.0f, _speed,
-              [packet currentSizeKBWithBackup:backupPacket], [packet totalSizeKBWithBackup:backupPacket]);
+//        NSLog(@"%s-[%@] received data [%.2fk], current speed [%.2fk/s], current size [%.2fk/%.2fk]",
+//              __FUNCTION__, _key, (double) [data length] / 1024.0f, _speed,
+//              [packet currentSizeKBWithBackup:backupPacket], [packet totalSizeKBWithBackup:backupPacket]);
     }
     
     if (_storageDelegate)

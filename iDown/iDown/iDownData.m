@@ -19,7 +19,7 @@
     NSFileHandle *_fileHandle;
     NSString *_filePath;
     bool _fileCreated;
-    iDownState oldState;
+    iDownState _oldState;
     
     unsigned long long _storedLength;
 }
@@ -34,6 +34,15 @@
 {
     static int defaultId = 0;
     return [NSString stringWithFormat:@"item %d", defaultId ++];
+}
+
+- (NSString *) description
+{
+    return [NSString stringWithFormat:@"key = %@\ndownloader = {\n%@\n}\nlength = %lld\nstate = %@",
+            _key,
+            _downloader,
+            _storedLength,
+            _state];
 }
 
 - (id) initWithUrl:(NSString *)urlString
@@ -64,7 +73,7 @@
         _downloader = [[iDownManager shared] addDownloadTaskWithUrlString:_urlString andKey:_key];
         _downloader.storageDelegate = self;
         _state = [[iDownStateMachine alloc] initWithState:iDownStateUnknown];
-        oldState = iDownStateUnknown;
+        _oldState = iDownStateUnknown;
     }
 
     return self;
@@ -121,16 +130,17 @@
 - (void) importDownloaderFromDic : (NSDictionary *) dic
 {
     _storedLength = [(NSNumber *)[dic objectForKey:@"storedLength"] unsignedLongLongValue];
+    _oldState = [(NSNumber *)[dic objectForKey:@"state"] intValue];
     _downloader = [iDownloader importFromDictionary:(NSDictionary *) [dic objectForKey:@"downloader"]];
     _downloader.storageDelegate = self;
 }
 
 - (void) handleNextState
 {
-    if (_state.state == oldState)
+    if (_state.state == _oldState)
         return;
     
-    oldState = _state.state;
+    _oldState = _state.state;
     switch (_state.state) {
         case iDownStateDownloading:
             [self startDownload];
