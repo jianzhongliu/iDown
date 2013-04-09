@@ -49,7 +49,7 @@
             {
                 _state = iDownStatePaused;
             }
-            else if (_state == iDownStatePaused || _state == iDownStateFailed)
+            else if (_state == iDownStatePaused || _state == iDownStateFailed || _state == iDownStateUnknown)
             {
                 _state = iDownStateDownloading;
             }

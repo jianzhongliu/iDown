@@ -97,8 +97,8 @@
 - (void) handleEvent:(iDownEvent)event
 {
     [_state nextStateWithEvent:event];
-    NSLog(@"%s-[%@] received [%d] event, state changes to [%d]",
-          __FUNCTION__, _key, event, _state.state);
+//    NSLog(@"%s-[%@] received [%d] event, state changes to [%d]",
+//          __FUNCTION__, _key, event, _state.state);
     [self handleNextState];
 }
 
@@ -269,7 +269,7 @@
     {
         NSDictionary * attributes = [filemanager attributesOfItemAtPath:_filePath error:nil];
         NSNumber *theFileSize = [attributes objectForKey:NSFileSize];
-        NSLog(@"%s-checkfile [%@], [%.2fk]", __FUNCTION__, _filePath, (double) [theFileSize intValue]);
+        NSLog(@"%s-checkfile [%@], [%.2fk]", __FUNCTION__, _filePath, (double) [theFileSize intValue] / 1024.0f);
         
         [self handleEvent:iDownEventFinishedDownload];
     }

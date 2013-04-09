@@ -106,6 +106,10 @@
         _backupTime = self.downloadTime;
         _currentTime = newPack.currentTime;
         _startTime = newPack.startTime;
+        if (!_data)
+        {
+            _data = [[NSMutableData alloc] init];
+        }
         [_data appendData:newPack.data];
         return YES;
     }
@@ -116,27 +120,25 @@
 - (NSData *) buffToWriteWithBackup:(iDownloadPack *)backupPack isComplete:(bool)complete
 {
     long long tempLength = [_data length];
-    if (backupPack)
+    if (backupPack && backupPack.data)
     {
         tempLength += [backupPack.data length];
     }
     
     double sizeKB = (double) tempLength / 1024.0f;
+    
+//    NSLog(@"%s-buff length = [%.2fk]", __FUNCTION__, sizeKB);
     if (sizeKB > _minSizeKBForStore || complete)
     {
-        NSMutableData *ret;
-        if (backupPack)
+        NSMutableData *ret = [[NSMutableData alloc] init];
+        if (backupPack && backupPack.data)
         {
-            ret = backupPack.data;
-            [ret appendData:_data];
+            [ret appendData:backupPack.data];
             backupPack.data = [[NSMutableData alloc] init];
-            _data = [[NSMutableData alloc] init];
         }
-        else
-        {
-            ret = _data;
-            _data = [[NSMutableData alloc] init];
-        }
+        
+        [ret appendData:_data];
+        _data = [[NSMutableData alloc] init];
         return ret;
     }
 

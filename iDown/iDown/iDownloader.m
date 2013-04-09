@@ -57,6 +57,7 @@
     if (isPaused)
     {
         packet = [[iDownloadPack alloc] init];
+        packet.data = [[NSMutableData alloc] init];
         packet.request = [[NSMutableURLRequest alloc] initWithURL:_url];
         [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
               forHTTPHeaderField:@"RANGE"];
@@ -70,6 +71,7 @@
     else
     {
         packet = [[iDownloadPack alloc] init];
+        packet.data = [[NSMutableData alloc] init];
         packet.request = [[NSMutableURLRequest alloc] initWithURL:_url];
         [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
               forHTTPHeaderField:@"RANGE"];
