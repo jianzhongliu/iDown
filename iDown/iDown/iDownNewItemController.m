@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"请输入新下载项目";
+    self.navigationItem.title = @"新下载项目";
 
     [self.view setBackgroundColor:[UIColor iDownDarkGray]];
     

@@ -13,6 +13,7 @@
 #import "iDownDataManager.h"
 #import "iDownManager.h"
 #import "iDownNewItemController.h"
+#import "iDownFileInfoController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -154,7 +155,14 @@
     iDownData *data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
     if (data)
     {
-        [data handleEvent:iDownEventUserTappedItem];
+        if (data.state.state == iDownStateSucceed)
+        {
+            [self shouldShowFileNameWithData:data];
+        }
+        else
+        {
+            [data handleEvent:iDownEventUserTappedItem];
+        }
     }
 }
 
@@ -223,6 +231,15 @@
     [[iDownDataManager shared] appendItem:iData];
     [self.navigationController popViewControllerAnimated:YES];
     [downloadTable reloadData];
+}
+
+#pragma mark - show file info
+
+- (void) shouldShowFileNameWithData:(iDownData *)data
+{
+    iDownFileInfoController *fileInfo = [[iDownFileInfoController alloc] init];
+    fileInfo.data = data;
+    [self.navigationController pushViewController:fileInfo animated:YES];
 }
 
 @end

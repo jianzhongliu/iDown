@@ -38,6 +38,7 @@
 		63B3A19B17030D360005495C /* iDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A19A17030D360005495C /* iDownViewController.m */; };
 		63B3A1A2170312F30005495C /* UIColor+iDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B3A1A1170312F30005495C /* UIColor+iDown.m */; };
 		63B6C25C1715128E00DF4746 /* iDownNewItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B6C25B1715128E00DF4746 /* iDownNewItemController.m */; };
+		63B6C25F1715414300DF4746 /* iDownFileInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B6C25E1715414300DF4746 /* iDownFileInfoController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,8 @@
 		63B3A1A1170312F30005495C /* UIColor+iDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+iDown.m"; sourceTree = "<group>"; };
 		63B6C25A1715128E00DF4746 /* iDownNewItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownNewItemController.h; sourceTree = "<group>"; };
 		63B6C25B1715128E00DF4746 /* iDownNewItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownNewItemController.m; sourceTree = "<group>"; };
+		63B6C25D1715414300DF4746 /* iDownFileInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iDownFileInfoController.h; sourceTree = "<group>"; };
+		63B6C25E1715414300DF4746 /* iDownFileInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iDownFileInfoController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +264,8 @@
 				63AE18A11703EC5700DD22AA /* iDownProcessView.m */,
 				63B6C25A1715128E00DF4746 /* iDownNewItemController.h */,
 				63B6C25B1715128E00DF4746 /* iDownNewItemController.m */,
+				63B6C25D1715414300DF4746 /* iDownFileInfoController.h */,
+				63B6C25E1715414300DF4746 /* iDownFileInfoController.m */,
 			);
 			name = iDownView;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				637404AC1709A4510010C17E /* iDownloadPack.m in Sources */,
 				63A4DB241711235E002A192A /* NSDictionary+Helper.m in Sources */,
 				63B6C25C1715128E00DF4746 /* iDownNewItemController.m in Sources */,
+				63B6C25F1715414300DF4746 /* iDownFileInfoController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

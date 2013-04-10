@@ -43,6 +43,9 @@
 - (void) succeedDownload;
 - (void) idle;
 
+- (double) getDownloadTime;
+- (double) getDownloadSizeKB;
+
 - (NSDictionary *) exportToDictionary;
 + (iDownloader *) importFromDictionary : (NSDictionary *) dic;
 

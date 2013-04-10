@@ -94,6 +94,10 @@
             _state = iDownStateFailed;
             break;
             
+        case iDownEventUserTappedDeleteButton:
+            _state = iDownStateUnknown;
+            break;
+            
         default:
             break;
     }

@@ -119,7 +119,7 @@
     isPaused = NO;
     [packet.connection cancel];
     backupPacket = nil;
-    packet = nil;
+    packet = [[iDownloadPack alloc] init];
 }
 
 - (void) succeedDownload
@@ -151,6 +151,26 @@
         }
         
     }
+}
+
+- (double) getDownloadTime
+{
+    if (packet)
+    {
+        return [packet timeWithBackup:backupPacket];
+    }
+    
+    return backupPacket.downloadTime;
+}
+
+- (double) getDownloadSizeKB
+{
+    if (packet)
+    {
+        return [packet totalSizeKBWithBackup:backupPacket];
+    }
+    
+    return [backupPacket totalSizeKBWithBackup:nil];
 }
 
 - (NSDictionary *) exportToDictionary

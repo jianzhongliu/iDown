@@ -29,6 +29,7 @@
 @synthesize downloader = _downloader;
 @synthesize delegate = _delegate;
 @synthesize state = _state;
+@synthesize filePath = _filePath;
 
 + (NSString *) getDefaultKey
 {
@@ -159,7 +160,7 @@
             break;
         
         case iDownStateUnknown:
-            [self restartDownload];
+            [self prepareDownload];
             break;
             
         default:
@@ -177,6 +178,14 @@
     [_downloader idle];
 }
 
+- (void) prepareDownload
+{
+    [_downloader endDownload];
+    
+    [self idle];
+    [self removeCurrentFile];
+}
+
 - (void) startDownload
 {
     [self idle];
@@ -192,6 +201,7 @@
 - (void) restartDownload
 {
     [self idle];
+    [self removeCurrentFile];
     [_downloader endDownload];
     [_downloader startDownload];
 }
@@ -292,6 +302,19 @@
     }
     
     return YES;
+}
+
+- (void) removeCurrentFile
+{
+    if (!_filePath)
+        return;
+    
+    NSFileManager * filemanager = [[NSFileManager alloc] init];
+    if ([filemanager fileExistsAtPath: _filePath])
+    {
+        [filemanager removeItemAtPath:_filePath error:nil];
+        NSLog(@"%s-[%@] removed", __FUNCTION__, _filePath);
+    }
 }
 
 - (NSString *) getFilePathWithName : (NSString *) name

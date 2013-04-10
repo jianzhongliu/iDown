@@ -86,6 +86,9 @@
 
 - (double) speedKBPSWithBackup:(iDownloadPack *)backupPack
 {
+    if ([self timeWithBackup:backupPack] == 0)
+        return 0;
+    
     return [self currentSizeKBWithBackup:backupPack] / [self timeWithBackup:backupPack];
 }
 

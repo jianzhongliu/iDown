@@ -92,6 +92,7 @@
     [sizeLabel setHidden:YES];
     
     self.textLabel.text = kClickToAddDownload;
+    [self.textLabel setTextAlignment:NSTextAlignmentCenter];
     self.textLabel.textColor = [UIColor whiteColor];
 }
 
