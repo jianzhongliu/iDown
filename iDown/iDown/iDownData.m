@@ -108,6 +108,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:_key forKey:@"key"];
     [dic setValue:_urlString forKey:@"url"];
+    [dic setValue:_filePath forKey:@"path"];
     [dic setValue:[NSNumber numberWithUnsignedLongLong:_storedLength] forKey:@"storedLength"];
     [dic setValue:[NSNumber numberWithInt:(int)_state.state] forKey:@"state"];
     [dic setValue:[_downloader exportToDictionary] forKey:@"downloader"];
@@ -132,6 +133,7 @@
 {
     _storedLength = [(NSNumber *)[dic objectForKey:@"storedLength"] unsignedLongLongValue];
     _oldState = [(NSNumber *)[dic objectForKey:@"state"] intValue];
+    _filePath = [dic objectForKey:@"path"];
     _downloader = [iDownloader importFromDictionary:(NSDictionary *) [dic objectForKey:@"downloader"]];
     _downloader.storageDelegate = self;
 }
