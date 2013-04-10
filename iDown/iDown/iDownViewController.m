@@ -12,10 +12,11 @@
 #import "iDownItem.h"
 #import "iDownDataManager.h"
 #import "iDownManager.h"
+#import "iDownNewItemController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface iDownViewController () <UITableViewDataSource, UITableViewDelegate, iDownNewItemDelegate>
 
 @end
 
@@ -25,6 +26,8 @@
     UIButton *allStartBtn;
     UIButton *editBtn;
     UITableView *downloadTable;
+    bool editMode;
+    iDownNewItemController *newItemController;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -76,7 +79,9 @@
     downloadTable.separatorColor = [UIColor iDownLightGray];
     downloadTable.dataSource = self;
     downloadTable.delegate = self;
-    [back addSubview:downloadTable];    
+    [back addSubview:downloadTable];
+    
+    editMode = NO;
 }
 
 - (void) saveStatus
@@ -96,7 +101,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - tableView
+#pragma mark - tableView display
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,7 +125,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[iDownDataManager shared] count];
+    return [[iDownDataManager shared] count] + 1;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -139,12 +144,48 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == [[iDownDataManager shared] count])
+    {
+        NSLog(@"insert");
+        [self didTapNewItem];
+        return;
+    }
+    
     iDownData *data = [[iDownDataManager shared] dataAtIndex:indexPath.row];
     if (data)
     {
         [data handleEvent:iDownEventUserTappedItem];
     }
 }
+
+#pragma mark - tableview edit
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == [[iDownDataManager shared] count])
+        return UITableViewCellEditingStyleNone;
+    
+    if (editMode)
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+    else
+    {
+        return UITableViewCellEditingStyleNone;
+    }
+}
+
+- (void) tableView: (UITableView *)tableView commitEditingStyle: (UITableViewCellEditingStyle) editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [[iDownDataManager shared] removeDataWithIndex:row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 
 #pragma mark - button
 
@@ -157,6 +198,31 @@
 - (void) didTapEdit
 {
     NSLog(@"%s-did tap edit", __FUNCTION__);
+    editMode = !editMode;
+    [downloadTable setEditing:editMode animated:YES];
+    [downloadTable reloadData];
+}
+
+
+#pragma mark - newItem
+
+- (void) didTapNewItem
+{
+    NSLog(@"new item");
+    
+    newItemController = [[iDownNewItemController alloc] init];
+    newItemController.delegate = self;
+    [self.navigationController pushViewController:newItemController animated:YES];
+}
+
+- (void) shouldAddNewItemWithUrl:(NSString *)url andKey:(NSString *)key
+{
+    iDownData *iData = [[iDownData alloc] initWithUrl:url];
+    iData.key = key;
+    
+    [[iDownDataManager shared] appendItem:iData];
+    [self.navigationController popViewControllerAnimated:YES];
+    [downloadTable reloadData];
 }
 
 @end

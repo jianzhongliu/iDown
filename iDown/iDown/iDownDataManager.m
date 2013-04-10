@@ -15,6 +15,9 @@
     NSMutableArray *keys;
     NSMutableDictionary *dic;
     NSString *statusFile;
+    
+    NSString *newKey;
+    iDownData *newData;
 }
 
 + (iDownDataManager *) shared
@@ -39,6 +42,10 @@
     {
         [self reset];
         statusFile = @"status";
+        
+        newKey = kClickToAddDownload;
+        newData = [[iDownData alloc] initWithUrl:@"http://ww4.sinaimg.cn/bmiddle/6b13f227jw1e36rdsvb15j.jpg"];
+        newData.key = newKey;
     }
     
     return self;
@@ -57,8 +64,11 @@
 
 - (iDownData *) dataAtIndex:(int)index
 {
-    if ([keys count] <= index)
-        return NULL;
+    if (index > [keys count])
+        return nil;
+    
+    if (index == [keys count])
+        return newData;
     
     return [dic objectForKey:[keys objectAtIndex:index]];
 }
@@ -78,6 +88,18 @@
 {
     [keys removeObject:key];
     [dic removeObjectForKey:key];
+}
+
+- (void) removeDataWithIndex : (NSUInteger) index
+{
+    if (index >= [keys count])
+        return;
+    
+    if (index == NSNotFound)
+        return;
+    
+    NSString *tempKey = [keys objectAtIndex:index];
+    [self removeDataWithKey:tempKey];
 }
 
 - (NSUInteger) count

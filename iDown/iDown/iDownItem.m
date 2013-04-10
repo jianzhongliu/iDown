@@ -10,6 +10,7 @@
 #import "iDownProcessView.h"
 #import "UIImage+iDown.h"
 #import "iDownloader.h"
+#import "iDownDataManager.h"
 
 @interface iDownItem () <iDownloaderEvent, iDownStateController>
 
@@ -70,6 +71,30 @@
     return self;
 }
 
+- (void) initWithNormalMode
+{
+    self.textLabel.text = nil;
+    [stateIcon setHidden:NO];
+    [process setHidden:NO];
+    [stateLabel setHidden:NO];
+    [speedLabel setHidden:NO];
+    [nameLabel setHidden:NO];
+    [sizeLabel setHidden:NO];
+}
+
+- (void) initWithClickToAddNewMode
+{
+    [stateIcon setHidden:YES];
+    [process setHidden:YES];
+    [stateLabel setHidden:YES];
+    [speedLabel setHidden:YES];
+    [nameLabel setHidden:YES];
+    [sizeLabel setHidden:YES];
+    
+    self.textLabel.text = kClickToAddDownload;
+    self.textLabel.textColor = [UIColor whiteColor];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -120,6 +145,13 @@
 
 - (void) setData:(iDownData *)data
 {
+    if ([data.key isEqualToString:kClickToAddDownload])
+    {
+        [self initWithClickToAddNewMode];
+        return;
+    }
+    
+    [self initWithNormalMode];
     _data = data;
     _data.delegate = self;
     [_data setDownloadEventHandler:self];

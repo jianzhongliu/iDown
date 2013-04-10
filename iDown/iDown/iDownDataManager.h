@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "iDownData.h"
 
+#define kClickToAddDownload @"点击添加下载"
+
 @interface iDownDataManager : NSObject
 
 + (iDownDataManager *) shared;
@@ -19,6 +21,7 @@
 
 - (void) appendItem : (iDownData *) data;
 - (void) removeDataWithKey : (NSString *) key;
+- (void) removeDataWithIndex : (NSUInteger) index;
 - (NSUInteger) count;
 - (void) allStartDownload;
 - (void) allRestartDownload;
