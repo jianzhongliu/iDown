@@ -44,7 +44,6 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"我的下载";
-    
     [self.view setBackgroundColor:[UIColor iDownDarkGray]];
     
     CGFloat y = 10;

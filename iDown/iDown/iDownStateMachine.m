@@ -56,7 +56,7 @@
             break;
             
         case iDownEventUserTappedAllStartButton:
-            if (_state == iDownStatePaused || _state == iDownStateUnknown)
+            if (_state == iDownStatePaused || _state == iDownStateUnknown || _state == iDownStateFailed)
             {
                 _state = iDownStateDownloading;
             }

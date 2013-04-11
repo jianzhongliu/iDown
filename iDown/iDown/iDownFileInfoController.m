@@ -71,6 +71,8 @@
     [filePath setTextColor:[UIColor whiteColor]];
     [filePath setFont:[UIFont systemFontOfSize:15.0f]];
     [filePath setEditable:NO];
+    filePath.layer.masksToBounds = YES;
+    filePath.layer.cornerRadius = 6;
     [back addSubview:filePath];
     
     y += 70;
@@ -81,6 +83,8 @@
     [fileURL setTextColor:[UIColor whiteColor]];
     [fileURL setFont:[UIFont systemFontOfSize:15.0f]];
     [fileURL setEditable:NO];
+    fileURL.layer.masksToBounds = YES;
+    fileURL.layer.cornerRadius = 6;
     [back addSubview:fileURL];
     
     y += 70;

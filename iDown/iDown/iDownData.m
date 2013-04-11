@@ -110,6 +110,7 @@
     [dic setValue:_key forKey:@"key"];
     [dic setValue:_urlString forKey:@"url"];
     [dic setValue:_filePath forKey:@"path"];
+    [dic setValue:[NSNumber numberWithBool:_fileCreated] forKey:@"fileCreated"];
     [dic setValue:[NSNumber numberWithUnsignedLongLong:_storedLength] forKey:@"storedLength"];
     [dic setValue:[NSNumber numberWithInt:(int)_state.state] forKey:@"state"];
     [dic setValue:[_downloader exportToDictionary] forKey:@"downloader"];
@@ -135,6 +136,7 @@
     _storedLength = [(NSNumber *)[dic objectForKey:@"storedLength"] unsignedLongLongValue];
     _oldState = [(NSNumber *)[dic objectForKey:@"state"] intValue];
     _filePath = [dic objectForKey:@"path"];
+    _fileCreated = [(NSNumber *)[dic objectForKey:@"fileCreated"] boolValue];
     _downloader = [iDownloader importFromDictionary:(NSDictionary *) [dic objectForKey:@"downloader"]];
     _downloader.storageDelegate = self;
 }
@@ -216,6 +218,7 @@
     _filePath = nil;
     _fileCreated = NO;
     _fileHandle = nil;
+    [self idle];
 }
 
 - (void) succeedDownload
@@ -275,7 +278,7 @@
 - (void) reportComplete
 {
     [_fileHandle closeFile];
-    _fileCreated = NO;
+//    _fileCreated = NO;
     
     NSFileManager * filemanager = [[NSFileManager alloc] init];
     if([filemanager fileExistsAtPath: _filePath])

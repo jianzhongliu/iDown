@@ -9,6 +9,8 @@
 #import "iDownProcessView.h"
 #import "UIColor+iDown.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #define LENGTH  160
 #define WIDTH   6
 
@@ -30,9 +32,13 @@
     if (self) {
         backLine = [[UIView alloc] initWithFrame:self.frame];
         [backLine setBackgroundColor:[UIColor iDownProgressBackColor]];
+        backLine.layer.masksToBounds = YES;
+        backLine.layer.cornerRadius = 3;
         [self addSubview:backLine];
         
         frontLine = [[UIView alloc] initWithFrame:self.frame];
+        frontLine.layer.masksToBounds = YES;
+        frontLine.layer.cornerRadius = 3;
         [self addSubview:frontLine];
         
         _progress = 0;
@@ -66,7 +72,7 @@
             break;
         
         case iDownStateSucceed:
-//            [self setHidden:YES];
+            [frontLine setBackgroundColor:[UIColor iDownDownloadingColor]];
             break;
             
         case iDownStateUnknown:
