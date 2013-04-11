@@ -30,6 +30,7 @@
 @synthesize delegate = _delegate;
 @synthesize state = _state;
 @synthesize filePath = _filePath;
+@synthesize url = _urlString;
 
 + (NSString *) getDefaultKey
 {

@@ -28,6 +28,15 @@ Fix a bug which caused wrong behavior when restart after failed.
 2013.4.7
 Finish status retain and recovery. There is a bug that causes delegate instances of tableview lost
 
-2013.4.7
+2013.4.8
 Fix some bugs
+
+2013.4.9
+Add description for log, fix the bug of wrong file writing.
+
+2013.4.10
+Add file info/delete, Add add/delete download.
+
+2013.4.11
+Add duplicate download check.
 

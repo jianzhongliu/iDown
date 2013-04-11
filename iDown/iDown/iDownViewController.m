@@ -23,7 +23,6 @@
 
 @implementation iDownViewController
 {
-    UIView *back;
     UIButton *allStartBtn;
     UIButton *editBtn;
     UITableView *downloadTable;
@@ -46,10 +45,7 @@
     
     self.navigationItem.title = @"我的下载";
     
-    back = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-    [back setBackgroundColor:[UIColor iDownDarkGray]];
-    back.userInteractionEnabled = YES;
-    [self setView:back];
+    [self.view setBackgroundColor:[UIColor iDownDarkGray]];
     
     CGFloat y = 10;
 	
@@ -60,27 +56,27 @@
     [allStartBtn addTarget:self action:@selector(didTapAllStart) forControlEvents:UIControlEventTouchUpInside];
     allStartBtn.layer.masksToBounds = YES;
     allStartBtn.layer.cornerRadius = 4;
-    [back addSubview:allStartBtn];
+    [self.view addSubview:allStartBtn];
     
-    editBtn = [[UIButton alloc] initWithFrame:CGRectMake(back.frame.size.width - 30 - 120, y, 120, 30)];
+    editBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 30 - 120, y, 120, 30)];
     [editBtn setBackgroundColor:[UIColor iDownLightGray]];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [editBtn addTarget:self action:@selector(didTapEdit) forControlEvents:UIControlEventTouchUpInside];
     editBtn.layer.masksToBounds = YES;
     editBtn.layer.cornerRadius = 4;
-    [back addSubview:editBtn];
+    [self.view addSubview:editBtn];
     
     y += 40;
     
-    downloadTable = [[UITableView alloc] initWithFrame:CGRectMake(0, y, back.frame.size.width, back.frame.size.height - y)
+    downloadTable = [[UITableView alloc] initWithFrame:CGRectMake(0, y, self.view.frame.size.width, self.view.frame.size.height - y - 44)
                                                  style:UITableViewStylePlain];
     [downloadTable setBackgroundColor:[UIColor iDownDarkGray]];
     downloadTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     downloadTable.separatorColor = [UIColor iDownLightGray];
     downloadTable.dataSource = self;
     downloadTable.delegate = self;
-    [back addSubview:downloadTable];
+    [self.view addSubview:downloadTable];
     
     editMode = NO;
 }
@@ -225,6 +221,13 @@
 
 - (void) shouldAddNewItemWithUrl:(NSString *)url andKey:(NSString *)key
 {
+    if ([[iDownDataManager shared] isUrlExists:url])
+    {
+        [[[UIAlertView alloc] initWithTitle:@"网址已存在" message:@"该网址正在下载，将不会重复下载。" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil] show];
+        
+        return;
+    }
+    
     iDownData *iData = [[iDownData alloc] initWithUrl:url];
     iData.key = key;
     

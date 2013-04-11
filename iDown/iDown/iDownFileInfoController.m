@@ -18,9 +18,11 @@
 {
     UILabel *fileTitle;
     UITextView *filePath;
+    UITextView *fileURL;
     UILabel *fileSize;
     UILabel *downloadTime;
     UILabel *downloadSpeed;
+    UIScrollView *back;
     
     iDownData *_data;
 }
@@ -40,19 +42,26 @@
 	self.navigationItem.title = @"文件信息";
     [self.view setBackgroundColor:[UIColor iDownDarkGray]];
     
+    back = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 44)];
+    [back setBackgroundColor:[UIColor clearColor]];
+    [back setPagingEnabled:YES];
+    [back setScrollEnabled:YES];
+    back.showsVerticalScrollIndicator = YES;
+    [self.view addSubview:back];
+    
     CGFloat y = 10;
     
-    [self.view addSubview:[self labelWithY:y andText:@"下载项目"]];
+    [back addSubview:[self labelWithY:y andText:@"下载项目"]];
     
     y += 30;
     
     fileTitle = [self labelWithY:y andText:@""];
     [fileTitle setBackgroundColor:[UIColor iDownLightGray]];
-    [self.view addSubview:fileTitle];
+    [back addSubview:fileTitle];
     
     y += 30;
     
-    [self.view addSubview:[self labelWithY:y andText:@"文件路径"]];
+    [back addSubview:[self labelWithY:y andText:@"文件路径"]];
     
     y += 30;
     
@@ -62,37 +71,47 @@
     [filePath setTextColor:[UIColor whiteColor]];
     [filePath setFont:[UIFont systemFontOfSize:15.0f]];
     [filePath setEditable:NO];
-    [self.view addSubview:filePath];
+    [back addSubview:filePath];
     
     y += 70;
     
-    [self.view addSubview:[self labelWithY:y andText:@"文件大小"]];
+    fileURL = [[UITextView alloc] initWithFrame:CGRectMake(20, y, self.view.frame.size.width - 40, 60)];
+    [fileURL setBackgroundColor:[UIColor iDownLightGray]];
+    [fileURL setTextAlignment:NSTextAlignmentLeft];
+    [fileURL setTextColor:[UIColor whiteColor]];
+    [fileURL setFont:[UIFont systemFontOfSize:15.0f]];
+    [fileURL setEditable:NO];
+    [back addSubview:fileURL];
+    
+    y += 70;
+    
+    [back addSubview:[self labelWithY:y andText:@"文件大小"]];
     
     y += 30;
     
     fileSize = [self labelWithY:y andText:@""];
     [fileSize setBackgroundColor:[UIColor iDownLightGray]];
-    [self.view addSubview:fileSize];
+    [back addSubview:fileSize];
     
     y += 30;
     
-    [self.view addSubview:[self labelWithY:y andText:@"下载时间"]];
+    [back addSubview:[self labelWithY:y andText:@"下载时间"]];
     
     y += 30;
     
     downloadTime = [self labelWithY:y andText:@""];
     [downloadTime setBackgroundColor:[UIColor iDownLightGray]];
-    [self.view addSubview:downloadTime];
+    [back addSubview:downloadTime];
     
     y += 30;
     
-    [self.view addSubview:[self labelWithY:y andText:@"平均速度"]];
+    [back addSubview:[self labelWithY:y andText:@"平均速度"]];
     
     y += 30;
     
     downloadSpeed = [self labelWithY:y andText:@""];
     [downloadSpeed setBackgroundColor:[UIColor iDownLightGray]];
-    [self.view addSubview:downloadSpeed];
+    [back addSubview:downloadSpeed];
     
     y += 30;
     
@@ -104,7 +123,11 @@
     [button addTarget:self action:@selector(didTapDelete) forControlEvents:UIControlEventTouchUpInside];
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius = 4;
-    [self.view addSubview:button];
+    [back addSubview:button];
+    
+    y += 40;
+    
+    [back setContentSize:CGSizeMake(back.frame.size.width, y)];
     
     [self updateInfo];
 }
@@ -148,6 +171,7 @@
         downloadSpeed.text = [NSString stringWithFormat:@"%.2fk/s", size / time];
         filePath.text = _data.filePath;
         fileTitle.text = _data.key;
+        fileURL.text = _data.url;
     }
 }
 

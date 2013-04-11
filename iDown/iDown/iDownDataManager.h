@@ -19,6 +19,7 @@
 - (iDownData *) dataWithKey : (NSString *) key;
 - (NSUInteger) indexOfKey : (NSString *) key;
 
+- (bool) isUrlExists : (NSString *) url;
 - (void) appendItem : (iDownData *) data;
 - (void) removeDataWithKey : (NSString *) key;
 - (void) removeDataWithIndex : (NSUInteger) index;

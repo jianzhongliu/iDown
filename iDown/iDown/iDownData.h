@@ -23,6 +23,7 @@
 @property (nonatomic, strong) id<iDownStateController> delegate;
 @property (nonatomic, readonly) iDownloader *downloader;
 @property (nonatomic, readonly) NSString *filePath;
+@property (nonatomic, readonly) NSString *url;
 
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, unsafe_unretained) float size;

@@ -102,6 +102,19 @@
     [self removeDataWithKey:tempKey];
 }
 
+- (bool) isUrlExists:(NSString *)url
+{
+    iDownData *data;
+    for (NSObject *key in keys)
+    {
+        data = [dic objectForKey:key];
+        if ([data.url isEqualToString:url])
+            return YES;
+    }
+    
+    return NO;
+}
+
 - (NSUInteger) count
 {
     return [keys count];
