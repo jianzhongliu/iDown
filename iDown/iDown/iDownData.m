@@ -314,11 +314,14 @@
 {
     if (!_filePath)
         return;
+    _storedLength = 0;
+    _fileCreated = NO;
     
     NSFileManager * filemanager = [[NSFileManager alloc] init];
     if ([filemanager fileExistsAtPath: _filePath])
     {
         [filemanager removeItemAtPath:_filePath error:nil];
+
         NSLog(@"%s-[%@] removed", __FUNCTION__, _filePath);
     }
 }

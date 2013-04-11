@@ -150,7 +150,7 @@
 
 - (bool) checkValidWithBackup : (iDownloadPack *) backupPack
 {
-    if (backupPack)
+    if (backupPack && backupPack.totalLength)
         return (backupPack.totalLength == _totalLength + backupPack.currentLength);
     else
         return YES;
