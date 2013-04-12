@@ -126,7 +126,10 @@
 {
     isPaused = NO;
     [packet.connection cancel];
-    [backupPacket appendProgressWithPack:packet];
+    if (backupPacket)
+        [backupPacket appendProgressWithPack:packet];
+    else
+        backupPacket = packet;
     packet = nil;
 }
 

@@ -26,6 +26,7 @@
     if (self)
     {
         _minSizeKBForStore = 500;
+        _data = [[NSMutableData alloc] init];
     }
     return self;
 }
@@ -110,10 +111,6 @@
         _backupTime = self.downloadTime;
         _currentTime = newPack.currentTime;
         _startTime = newPack.startTime;
-        if (!_data)
-        {
-            _data = [[NSMutableData alloc] init];
-        }
         [_data appendData:newPack.data];
         return YES;
     }
