@@ -56,6 +56,8 @@
     [title setTextAlignment:NSTextAlignmentLeft];
     [title setTextColor:[UIColor whiteColor]];
     [title setFont:[UIFont systemFontOfSize:15.0f]];
+    title.layer.masksToBounds = YES;
+    title.layer.cornerRadius = 6;
     [self.view addSubview:title];
     
     y += 30;
@@ -77,6 +79,8 @@
     [url setFont:[UIFont systemFontOfSize:15.0f]];
     url.keyboardType = UIKeyboardTypeURL;
     url.delegate = self;
+    url.layer.masksToBounds = YES;
+    url.layer.cornerRadius = 6;
     [self.view addSubview:url];
     
     y += 110;

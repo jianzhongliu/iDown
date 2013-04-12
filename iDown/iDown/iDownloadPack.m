@@ -44,7 +44,6 @@
 
 - (double) downloadTime
 {
-    if (_currentTime != 0 && _startTime)
     return (double) (_currentTime - _startTime + _backupTime);
 }
 

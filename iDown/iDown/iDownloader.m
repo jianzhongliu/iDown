@@ -73,9 +73,9 @@
         packet = [[iDownloadPack alloc] init];
         packet.data = [[NSMutableData alloc] init];
         packet.request = [[NSMutableURLRequest alloc] initWithURL:_url];
-        [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
-              forHTTPHeaderField:@"RANGE"];
-        [packet.request setValue:@"" forHTTPHeaderField:@"IF-RANGE"];
+//        [packet.request setValue:[NSString stringWithFormat:@"bytes=%lld-", backupPacket.currentLength]
+//              forHTTPHeaderField:@"RANGE"];
+//        [packet.request setValue:@"" forHTTPHeaderField:@"IF-RANGE"];
         packet.connection = [[NSURLConnection alloc] initWithRequest:packet.request
                                                             delegate:self
                                                     startImmediately:NO];
@@ -126,7 +126,7 @@
 {
     isPaused = NO;
     [packet.connection cancel];
-    backupPacket = packet;
+    [backupPacket appendProgressWithPack:packet];
     packet = nil;
 }
 
