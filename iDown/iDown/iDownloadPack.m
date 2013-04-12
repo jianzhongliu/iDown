@@ -44,6 +44,7 @@
 
 - (double) downloadTime
 {
+    if (_currentTime != 0 && _startTime)
     return (double) (_currentTime - _startTime + _backupTime);
 }
 
@@ -78,6 +79,7 @@
 
 - (double) timeWithBackup:(iDownloadPack *)backupPack
 {
+//    NSLog(@"self time = [%.2fs], backup time = [%.2fs]", self.downloadTime, backupPack.downloadTime);
     if (backupPack)
         return self.downloadTime + backupPack.downloadTime;
     
@@ -88,7 +90,7 @@
 {
     if ([self timeWithBackup:backupPack] == 0)
         return 0;
-    
+//    NSLog(@"size = [%.2fk], time = [%.2fs]", [self currentSizeKBWithBackup:backupPack], [self timeWithBackup:backupPack]);
     return [self currentSizeKBWithBackup:backupPack] / [self timeWithBackup:backupPack];
 }
 

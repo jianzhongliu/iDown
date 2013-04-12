@@ -288,6 +288,7 @@
     packet.totalLength = [response expectedContentLength];
     packet.currentLength = 0;
     packet.startTime = [NSDate timeIntervalSinceReferenceDate];
+    packet.currentTime = packet.startTime;
     packet.data = [[NSMutableData alloc] init];
     
     if (![packet checkValidWithBackup:backupPacket])
