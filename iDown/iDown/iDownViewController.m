@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationItem.title = @"我的下载";
     [self.view setBackgroundColor:[UIColor iDownDarkGray]];
     

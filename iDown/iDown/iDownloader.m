@@ -338,6 +338,9 @@
         [_delegate didFinishDownloadDataSize: [packet currentSizeKBWithBackup:backupPacket]];
         [_delegate didChangeDownloadProgress: [packet progressWithBackup:backupPacket] withKey:_key];
         [_delegate didFinishDownload];
+        if ((int)[packet timeWithBackup:backupPacket] == 0) {
+            
+        }
         NSLog(@"%s-[%@] finished download, size [%.2fk], cost time [%.2fs], average speed [%.2fk/s]",
               __FUNCTION__, _key, [packet currentSizeKBWithBackup:backupPacket], [packet timeWithBackup:backupPacket], [packet speedKBPSWithBackup:backupPacket]);
     }
